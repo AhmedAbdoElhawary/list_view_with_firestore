@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'card_grid_view.dart';
+import 'deck_list_view.dart';
 import 'form_screen.dart';
 import 'cubit/big_states.dart';
 import 'cubit/logic_cubit.dart';
+import 'gallery_screen_home.dart';
+
+List<Widget> list_widget = [
+  deckListView(),
+  CardGridView(),
+  galleryScreenHome(),
+];
 
 class NavigationBar extends StatelessWidget {
   @override
@@ -17,7 +26,7 @@ class NavigationBar extends StatelessWidget {
             child: Scaffold(
               appBar: MyAppBar(),
               drawer: AppDrawer(),
-              body: cubit.list_widget[cubit.c_index],
+              body: list_widget[cubit.c_index],
               bottomNavigationBar: BottomNavBar(cubit),
               floatingActionButton: FloatingActionBtn(context),
             ),
