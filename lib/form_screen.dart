@@ -9,6 +9,8 @@ class FormScreen extends StatelessWidget {
   var controlDescription = TextEditingController();
   var controlEmail = TextEditingController();
   var controlImage = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -19,97 +21,86 @@ class FormScreen extends StatelessWidget {
           LogicShowCubit cubit = LogicShowCubit.get(context);
           return Scaffold(
             appBar: AppBar(),
-            body: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: SingleChildScrollView(
-                        child: Column(children: [
-                          TextFormField(
-                            controller: controlName,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'The Name',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          TextFormField(
-                            controller: controlDescription,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Description',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          TextFormField(
-                            controller: controlEmail,
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: 'Email',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          TextFormField(
-                            controller: controlImage,
-                            keyboardType: TextInputType.url,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Image',
-                                suffixIcon: Icon(
-                                  Icons.camera_alt,
-                                )),
-                          ),
-                        ]),
+            body: Form(key:formKey,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: SingleChildScrollView(
+                          child: Column(children: [
+                            TextFromFieldMethod(nameOfController: controlName, typeOfText: TextInputType.text, labelText: "the Name"),
+                            SizedBoxMethod(),
+                            TextFromFieldMethod(nameOfController: controlDescription, typeOfText: TextInputType.text, labelText: "Description"),
+                            SizedBoxMethod(),
+                            TextFromFieldMethod(nameOfController: controlEmail, typeOfText: TextInputType.emailAddress, labelText: "Email"),
+                            SizedBoxMethod(),
+                            TextFromFieldMethod(nameOfController: controlImage, typeOfText: TextInputType.url, labelText: "Image"),
+                          ]),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  color: Colors.white60,
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("Cancel"),
+                  Container(
+                    color: Colors.white60,
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text("Cancel"),
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () {
-                            cubit.setDataInFirestore(
-                              name: controlName.text,
-                              description: controlDescription.text,
-                              email: controlEmail.text,
-                              image: controlImage.text,
-                            );
-                            Navigator.pop(context);
-                          },
-                          child: Text("Save"),
+                        Expanded(
+                          child: TextButton(
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                Navigator.pop(context);
+                                cubit.setDataInFirestore(
+                                  name: controlName.text,
+                                  description: controlDescription.text,
+                                  email: controlEmail.text,
+                                  image: controlImage.text,
+                                );
+                              }
+                            },
+                            child: Text("Save"),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
       ),
+    );
+  }
+  Widget TextFromFieldMethod({required var nameOfController,required var typeOfText,required String labelText}){
+    return TextFormField(
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter some text';
+        }
+        return null;
+      },
+      controller: nameOfController,
+      keyboardType: typeOfText,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: labelText,
+      ),
+    );
+  }
+  Widget SizedBoxMethod(){
+    return SizedBox(
+      height: 15,
     );
   }
 }
