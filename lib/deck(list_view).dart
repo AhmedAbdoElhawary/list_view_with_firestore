@@ -46,13 +46,6 @@ class deckListView extends StatelessWidget {
               );
             },
           );
-          // return ListView.separated(
-          //     itemBuilder: (context, index) =>cubit.buildPadding(docs[index]),
-          //     separatorBuilder: (context, index) => Container(
-          //       width: double.infinity,
-          //       height: 1,
-          //     ),
-          //     itemCount:docs.length);
         },
       );
   }

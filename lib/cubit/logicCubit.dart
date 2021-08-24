@@ -1,10 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firestore_again/ListOfItems.dart';
 import 'package:firestore_again/card(GridView).dart';
 import 'package:firestore_again/cubit/bigStates.dart';
-import 'package:firestore_again/emailPageShow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -12,7 +9,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../deck(list_view).dart';
 import '../gallery(ScreenHome).dart';
-
 class LogicShowCubit extends Cubit<BigShowStates> {
   LogicShowCubit() : super(ShowInitialState());
 
@@ -32,6 +28,7 @@ class LogicShowCubit extends Cubit<BigShowStates> {
   // }
   Widget buildPaddingListView(model) {
     return Card(
+      shadowColor: Colors.blue[300],
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 4,
       margin:EdgeInsets.all(5.0),
@@ -57,7 +54,7 @@ class LogicShowCubit extends Cubit<BigShowStates> {
               width: 6,
             ),
             Container(
-              width: 280,
+              width: 240,
               padding: EdgeInsets.only(top: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,6 +101,7 @@ class LogicShowCubit extends Cubit<BigShowStates> {
 
   Widget buildOneContainerGridView(m){
     return Card(
+      shadowColor: Colors.blue,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 6,
       child: Container(
@@ -128,6 +126,16 @@ class LogicShowCubit extends Cubit<BigShowStates> {
                 ),
               ),
               SizedBox(height: 40,),
+              // NeumorphicText(
+              //   "I love flutter",
+              //   style: NeumorphicStyle(
+              //     depth: 4,
+              //     color: Colors.white,
+              //   ),
+              //   textStyle: NeumorphicTextStyle(
+              //     fontSize: 18,
+              //   ),
+              // ),
               Text(
                 "${m["name"]}",
                 style: TextStyle(
@@ -140,6 +148,8 @@ class LogicShowCubit extends Cubit<BigShowStates> {
                   fontSize: 15,
                   color: Colors.black38,
                 ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: 25,),
               Text(
@@ -174,6 +184,7 @@ class LogicShowCubit extends Cubit<BigShowStates> {
   Widget buildTwoContainerGridView(m){
     return  Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
+      shadowColor: Colors.blue,
       elevation: 9,
       margin:EdgeInsets.all(5.0),
       child: Container(

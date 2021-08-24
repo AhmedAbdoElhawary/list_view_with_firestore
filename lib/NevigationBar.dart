@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sqflite/sqflite.dart';
 import 'FormScreen.dart';
-import 'ListOfItems.dart';
 import 'cubit/bigStates.dart';
 import 'cubit/logicCubit.dart';
 
@@ -124,11 +121,6 @@ class NevigationBar extends StatelessWidget {
                     context,
                     MaterialPageRoute(builder: (context) => FormScreen()),
                   );
-                  // FirebaseFirestore.instance
-                  //     .collection('data')
-                  //     .add({'text': 'data added through app'});
-                  // deckListView(n: "${back[0]}",d: "${back[1]}",e: "${back[2]}",i: "${back[3]}");
-                  // cubit.getDataFromFirebase();
                 },
                 child: Icon(
                   Icons.add,
