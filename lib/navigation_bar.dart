@@ -40,6 +40,7 @@ class NavigationBar extends StatelessWidget {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 2.7,
+      iconTheme:IconThemeData.fallback() ,
     );
   }
 

@@ -10,7 +10,6 @@ class FormScreen extends StatelessWidget {
   var controlEmail = TextEditingController();
   var controlImage = TextEditingController();
   final formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -18,7 +17,6 @@ class FormScreen extends StatelessWidget {
       child: BlocConsumer<LogicShowCubit, BigShowStates>(
         listener: (context, state) {},
         builder: (context, state) {
-          LogicShowCubit cubit = LogicShowCubit.get(context);
           return Scaffold(
             appBar: AppBar(),
             body: Form(key:formKey,
@@ -49,7 +47,7 @@ class FormScreen extends StatelessWidget {
                       children: [
                         TextButtonMethod(sendDataToFirestore: false,context: context,text: "Cancel"),
 
-                        TextButtonMethod(sendDataToFirestore: true,context: context,text: "Save"),
+                        TextButtonMethod(sendDataToFirestore: true,context: context,text: "Save "),
                       ],
                     ),
                   ),

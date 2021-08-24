@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_again/cubit/big_states.dart';
 import 'package:firestore_again/cubit/logic_cubit.dart';
+import 'package:firestore_again/information_of_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,12 +25,13 @@ class deckListView extends StatelessWidget {
             return ListView.separated(
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) =>
-                  buildPaddingListView(docs[index]),
+                  buildPaddingListView(model:docs[index],context: context),
               separatorBuilder: (context, index) => Container(
                 width: double.infinity,
                 height: 5,
               ),
               itemCount: docs.length,
+
             );
           },
         );
@@ -37,61 +39,69 @@ class deckListView extends StatelessWidget {
     );
   }
 
-  Widget buildPaddingListView(model) {
-    return Card(
-      shadowColor: Colors.blue[300],
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      elevation: 4,
-      margin: EdgeInsets.all(5.0),
-      child: Container(
-        color: Colors.white,
-        height: 105,
-        alignment: AlignmentDirectional.bottomEnd,
-        child: Row(
-          children: [
-            Image.network(
-              "${model["image"]}",
-              width: 100,
-              height: 110,
-              fit: BoxFit.fill,
-            ),
-            SizedBox(
-              width: 6,
-            ),
-            Container(
-              width: 240,
-              padding: EdgeInsets.only(top: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("${model['name']}"),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "${model["description"]}",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.delete_outline),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.edit_outlined),
-                      ),
-                    ],
-                  ),
-                ],
+  Widget buildPaddingListView({required model,var context}) {
+    return InkWell(
+      child: Card(
+        shadowColor: Colors.blue[300],
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        elevation: 4,
+        margin: EdgeInsets.all(5.0),
+        child: Container(
+          color: Colors.white,
+          height: 105,
+          alignment: AlignmentDirectional.bottomEnd,
+          child: Row(
+            children: [
+              Image.network(
+                "${model["image"]}",
+                width: 100,
+                height: 110,
+                fit: BoxFit.fill,
               ),
-            ),
-          ],
+              SizedBox(
+                width: 6,
+              ),
+              Container(
+                width: 240,
+                padding: EdgeInsets.only(top: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("${model['name']}"),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "${model["description"]}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.delete_outline),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.edit_outlined),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => InformationPage(model)),
+        );
+      },
     );
   }
 }
