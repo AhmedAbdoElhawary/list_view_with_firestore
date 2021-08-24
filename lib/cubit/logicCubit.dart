@@ -205,8 +205,6 @@ class LogicShowCubit extends Cubit<BigShowStates> {
     galleryScreenHome(),
   ];
 
-  List task = [];
-
   setDataInFirestore({
     required String name,
     required String description,
