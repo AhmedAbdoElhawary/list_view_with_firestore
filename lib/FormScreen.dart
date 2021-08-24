@@ -70,90 +70,6 @@ class FormScreen extends StatelessWidget {
                                   Icons.camera_alt,
                                 )),
                           ),
-                          // SizedBox(
-                          //   height: 15,
-                          // ),
-                          // TextFormField(
-                          //   controller: controlAddress,
-                          //   keyboardType: TextInputType.emailAddress,
-                          //   decoration: InputDecoration(
-                          //     border: OutlineInputBorder(),
-                          //     labelText: 'URL',
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 15,
-                          // ),
-                          // TextFormField(
-                          //   controller: controlAddress,
-                          //   keyboardType: TextInputType.emailAddress,
-                          //   decoration: InputDecoration(
-                          //     border: OutlineInputBorder(),
-                          //     labelText: 'File',
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 15,
-                          // ),
-                          // TextFormField(
-                          //   controller: controlAddress,
-                          //   keyboardType: TextInputType.emailAddress,
-                          //   decoration: InputDecoration(
-                          //     border: OutlineInputBorder(),
-                          //     labelText: 'Status',
-                          //   ),
-                          // ),
-                          // SizedBox(
-                          //   height: 15,
-                          // ),
-                          // TextFormField(
-                          //   controller: controlAddress,
-                          //   keyboardType: TextInputType.emailAddress,
-                          //   decoration: InputDecoration(
-                          //       border: OutlineInputBorder(),
-                          //       labelText: 'Date/Time',
-                          //       suffixIcon: IconButton(
-                          //         onPressed: () {},
-                          //         icon: Icon(Icons.date_range),
-                          //       )),
-                          // ),
-                          // TextFormField(
-                          //   controller: controlAddress,
-                          //   keyboardType: TextInputType.emailAddress,
-                          //   decoration: InputDecoration(
-                          //     border: OutlineInputBorder(),
-                          //     labelText: 'Author',
-                          //   ),
-                          // ),
-
-                          //TextFromField
-                          // TextFormField(
-                          //   obscureText: isVisible,
-                          //   controller: controlPassword,
-                          //   keyboardType: TextInputType.visiblePassword,
-                          //   decoration: InputDecoration(
-                          //     border: OutlineInputBorder(),
-                          //     labelText: 'Password',
-                          //     prefixIcon: Icon(Icons.lock),
-                          //     suffixIcon: IconButton(
-                          //       onPressed: () {
-                          //         setState(() {
-                          //           if (isVisible == true)
-                          //             isVisible = false;
-                          //           else
-                          //             isVisible = true;
-                          //           if (iconVisible == Icons.remove_red_eye)
-                          //             iconVisible = Icons.remove_red_eye_outlined;
-                          //           else
-                          //             iconVisible = Icons.remove_red_eye;
-                          //         });
-                          //       },
-                          //       icon: Icon(
-                          //         iconVisible,
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                         ]),
                       ),
                     ),
@@ -175,21 +91,12 @@ class FormScreen extends StatelessWidget {
                       Expanded(
                         child: TextButton(
                           onPressed: () {
-                            // print("${controlName.text} "
-                            //     "${controlDescription.text} "
-                            //     "${controlEmail.text} "
-                            //     "${controlImage.text}");
-                            // ListOfDeckListView().setData(controlName.text, controlDescription.text, controlEmail.text, controlImage.text);
                             cubit.setDataInFirestore(
                               name: controlName.text,
                               description: controlDescription.text,
                               email: controlEmail.text,
                               image: controlImage.text,
                             );
-                            // cubit.getData(LogicShowCubit.database).then((value) {
-                            //   cubit.task = value;
-                            //   print(value);
-                            // });
                             Navigator.pop(context);
                           },
                           child: Text("Save"),

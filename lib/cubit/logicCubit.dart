@@ -21,11 +21,6 @@ class LogicShowCubit extends Cubit<BigShowStates> {
     emit(ShowGetIndexState());
   }
 
-  // setInList(dynamic v){
-  //   task.add(v);
-  //   // print("add ${task.length}");
-  //   emit(ShowSetInListState());
-  // }
   Widget buildPaddingListView(model) {
     return Card(
       shadowColor: Colors.blue[300],
@@ -37,7 +32,6 @@ class LogicShowCubit extends Cubit<BigShowStates> {
         height: 105,
         alignment: AlignmentDirectional.bottomEnd,
         child: Row(
-          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.network(
               "${model["image"]}",
@@ -45,11 +39,6 @@ class LogicShowCubit extends Cubit<BigShowStates> {
               height: 110,
               fit: BoxFit.fill,
             ),
-            // Icon(
-            //   Icons.waves_outlined,
-            //   size: 110,
-            // ),
-            // Images( url: "https://thumbs.dreamstime.com/b/racial-love-white-caucasion-black-african-american-hands-shaped-as-interracial-heart-representing-world-unity-ethnic-162292478.jpg",),
             SizedBox(
               width: 6,
             ),
@@ -79,15 +68,6 @@ class LogicShowCubit extends Cubit<BigShowStates> {
                         onPressed: () {},
                         icon: Icon(Icons.edit_outlined),
                       ),
-                      // IconButton(
-                      //   onPressed: () {
-                      //     // Navigator.push(
-                      //     //   context,
-                      //     //   MaterialPageRoute(builder: (context) => EmailPage()),
-                      //     // );
-                      //   },
-                      //   icon: Icon(Icons.mail_outline),
-                      // ),
                     ],
                   ),
                 ],
@@ -126,16 +106,6 @@ class LogicShowCubit extends Cubit<BigShowStates> {
               SizedBox(
                 height: 40,
               ),
-              // NeumorphicText(
-              //   "I love flutter",
-              //   style: NeumorphicStyle(
-              //     depth: 4,
-              //     color: Colors.white,
-              //   ),
-              //   textStyle: NeumorphicTextStyle(
-              //     fontSize: 18,
-              //   ),
-              // ),
               Text(
                 "${m["name"]}",
                 style: TextStyle(
@@ -201,10 +171,6 @@ class LogicShowCubit extends Cubit<BigShowStates> {
             image: NetworkImage("${m["image"]}"),
             fit: BoxFit.cover,
           ),
-          // border: Border.symmetric(horizontal: BorderSide(width: 7),
-          //   // color: Colors.black26,
-          //   // width: 7,
-          // ),
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           color: Colors.white,
@@ -213,12 +179,6 @@ class LogicShowCubit extends Cubit<BigShowStates> {
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.max,
           children: [
-            // Image.network(
-            //   "${m["image"]}",
-            //   width: 160,
-            //   height: 170,
-            //   fit: BoxFit.fill,
-            // ),
             Text(
               "${m["name"]}",
               style: TextStyle(
@@ -245,112 +205,7 @@ class LogicShowCubit extends Cubit<BigShowStates> {
     galleryScreenHome(),
   ];
 
-  /*database functions*/
-  //
-  //  static late Database database;
-  //
-  //  void createDatabase() async {
-  //    database=await openDatabase(
-  //      'appSheet2.db',
-  //      version: 1,
-  //      onCreate: (database, version) {
-  //        print("database created");
-  //        database
-  //            .execute(
-  //            'CREATE TABLE tasks ( id INTEGER PRIMARY KEY,name TEXT,description TEXT,email TEXT,image TEXT)')
-  //            .then((value) {
-  //          print("table created");
-  //        }).catchError((e) {
-  //          print('Error when creating table ${e.toString()}');
-  //        });
-  //        emit(ShowCreateDatabaseState());
-  //      },
-  //      onOpen: (database) {
-  //        print("database opened");
-  //
-  //      },
-  //
-  //    );
-  //
-  //  }
-  //  insertDatabase({
-  //    required String name,
-  //    required String description,
-  //    required String email,
-  //    required String image,
-  //  }) async {
-  //    await database.transaction((txn) async {
-  //       await txn
-  //          .rawInsert('INSERT INTO tasks (name, description, email, image) VALUES("${name.toString()} ","${description.toString()}","${email.toString()}","${image.toString()}")')
-  //          .then((value) {
-  //        print("$value inserted successfully");
-  //
-  //        getData(database).then((value) {
-  //          // setInList(value);
-  //          deckListView.task1.cast().add(
-  //              {"name":"$name","description":"$description","email":"$email","image":"$image",}
-  //          );
-  //          print(deckListView.task1);
-  //          print("==================================================");
-  //          print(deckListView.task1.length);
-  //          emit(ShowGetDataState());
-  //        });
-  //
-  //      }).catchError((e) {
-  //        print("not good");
-  //      });
-  //    });
-  //    emit(ShowInsertDatabaseState());
-  //    return null;
-  //  }
-  //
-  // static dynamic getData(database) async {
-  //    return await database.rawQuery("SELECT * FROM tasks");
-  //  }
-  //
-  //  void deltedb(int id){
-  //    database
-  //        .rawDelete('DELETE FROM tasks WHERE id = ?', [id]);
-  //    print ("delete ");
-  //  }
-
-// void getData(database)async{
-//   List<Map> task= await database.rawQuery("SELECT * FROM tasks");
-//   print(task);
-// }
-
   List task = [];
-
-// realtime firebase
-//   final databaseRef = FirebaseDatabase.instance.reference();
-//
-//   setDataInFirebase({
-//     required String name,
-//     required String description,
-//     required String email,
-//     required String image,
-// }){
-//     databaseRef.push().set({
-//       'name': "$name",
-//       'description': '$description',
-//       "email":"$email",
-//       "Image":"$image",
-//     });
-//     emit(ShowInsertFirebaseState());
-//   }
-//
-//   getDataFromFirebase(){
-//     databaseRef.once().then((DataSnapshot snapshot) {
-//       print('Data : ${snapshot.value}');
-//       task=snapshot.value;
-//       print("\n\nthis is the task $task\n\n");
-//       print(task.length);
-//
-//     });
-//
-//     emit(ShowGetDataState());
-//   }
-//
 
   setDataInFirestore({
     required String name,
@@ -366,22 +221,4 @@ class LogicShowCubit extends Cubit<BigShowStates> {
     });
     emit(ShowInsertFirestoreState());
   }
-
-  // getDataFromFirestore() async {
-  //   CollectionReference _collectionRef =
-  //   FirebaseFirestore.instance.collection('data');
-  //
-  //   // Get docs from collection reference
-  //   QuerySnapshot querySnapshot = await _collectionRef.get();
-  //
-  //   // Get data from docs and convert map to List
-  //   final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-  //
-  //   task=allData;
-  //   print(task);
-  //   print(task.length);
-  //   print(allData);
-  //
-  // }
-
 }

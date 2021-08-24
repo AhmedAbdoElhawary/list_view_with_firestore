@@ -6,14 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class deckListView extends StatelessWidget {
-  // static List<Map>task=[
-  //    {"name":"ahmed","description":"learn"},
-  //    {"name":"abdo","description":"learn"},
-  //    {"name":"ali","description":"learn"},
-  //    {"name":"salama","description":"learn"},
-  //    {"name":"ahmed","description":"learn"},
-  //
-  //  ];
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LogicShowCubit, BigShowStates>(
