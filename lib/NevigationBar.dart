@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'FormScreen.dart';
@@ -6,7 +5,6 @@ import 'cubit/bigStates.dart';
 import 'cubit/logicCubit.dart';
 
 class NevigationBar extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -14,7 +12,7 @@ class NevigationBar extends StatelessWidget {
       child: BlocConsumer<LogicShowCubit, BigShowStates>(
         listener: (context, state) {},
         builder: (context, state) {
-         LogicShowCubit cubit = LogicShowCubit.get(context);
+          LogicShowCubit cubit = LogicShowCubit.get(context);
           return SafeArea(
             child: Scaffold(
               appBar: AppBar(
@@ -23,7 +21,6 @@ class NevigationBar extends StatelessWidget {
               ),
               drawer: Drawer(
                 child: Column(
-
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -98,7 +95,7 @@ class NevigationBar extends StatelessWidget {
               ),
               body: cubit.list_widget[cubit.c_index],
               bottomNavigationBar: BottomNavigationBar(
-                selectedItemColor:Colors.lightBlueAccent[350],
+                selectedItemColor: Colors.lightBlueAccent[350],
                 // selectedItemColor: cubit.list_color[cubit.c_index],
                 currentIndex: cubit.c_index,
                 onTap: (value) {
@@ -106,8 +103,7 @@ class NevigationBar extends StatelessWidget {
                 },
                 items: [
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.list_outlined),
-                      label: 'list view'),
+                      icon: Icon(Icons.list_outlined), label: 'list view'),
                   BottomNavigationBarItem(
                       icon: Icon(Icons.credit_card_sharp), label: 'card'),
                   BottomNavigationBarItem(
@@ -126,7 +122,7 @@ class NevigationBar extends StatelessWidget {
                   Icons.add,
                   color: Colors.black,
                 ),
-                backgroundColor:Colors.grey[100],
+                backgroundColor: Colors.grey[100],
                 elevation: 12,
               ),
             ),
@@ -135,6 +131,4 @@ class NevigationBar extends StatelessWidget {
       ),
     );
   }
-
 }
-

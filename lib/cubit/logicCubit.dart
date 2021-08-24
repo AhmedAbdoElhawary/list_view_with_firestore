@@ -2,13 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_again/card(GridView).dart';
 import 'package:firestore_again/cubit/bigStates.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../deck(list_view).dart';
 import '../gallery(ScreenHome).dart';
+
 class LogicShowCubit extends Cubit<BigShowStates> {
   LogicShowCubit() : super(ShowInitialState());
 
@@ -31,7 +31,7 @@ class LogicShowCubit extends Cubit<BigShowStates> {
       shadowColor: Colors.blue[300],
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 4,
-      margin:EdgeInsets.all(5.0),
+      margin: EdgeInsets.all(5.0),
       child: Container(
         color: Colors.white,
         height: 105,
@@ -99,13 +99,12 @@ class LogicShowCubit extends Cubit<BigShowStates> {
     );
   }
 
-  Widget buildOneContainerGridView(m){
+  Widget buildOneContainerGridView(m) {
     return Card(
       shadowColor: Colors.blue,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 6,
       child: Container(
-
         width: double.infinity,
         alignment: Alignment.bottomCenter,
         decoration: BoxDecoration(
@@ -117,15 +116,16 @@ class LogicShowCubit extends Cubit<BigShowStates> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 25,),
+              SizedBox(
+                height: 25,
+              ),
               Text(
                 "Done",
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 40,),
+              SizedBox(
+                height: 40,
+              ),
               // NeumorphicText(
               //   "I love flutter",
               //   style: NeumorphicStyle(
@@ -151,16 +151,20 @@ class LogicShowCubit extends Cubit<BigShowStates> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(height: 25,),
+              SizedBox(
+                height: 25,
+              ),
               Text(
                 "${m["email"]}",
                 style: TextStyle(
                   fontSize: 16,
-
                 ),
               ),
-              SizedBox(height: 25,),
-              Row(mainAxisSize:  MainAxisSize.max,
+              SizedBox(
+                height: 25,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
                 children: [
                   Expanded(
                     child: Text(
@@ -168,25 +172,28 @@ class LogicShowCubit extends Cubit<BigShowStates> {
                     ),
                   ),
                   Icon(Icons.edit_outlined),
-                  SizedBox(width: 30,),
+                  SizedBox(
+                    width: 30,
+                  ),
                   Icon(Icons.delete_outlined),
-                  SizedBox(width: 25,),
+                  SizedBox(
+                    width: 25,
+                  ),
                 ],
               ),
             ],
-
           ),
         ),
       ),
     );
   }
 
-  Widget buildTwoContainerGridView(m){
-    return  Card(
+  Widget buildTwoContainerGridView(m) {
+    return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shadowColor: Colors.blue,
       elevation: 9,
-      margin:EdgeInsets.all(5.0),
+      margin: EdgeInsets.all(5.0),
       child: Container(
         alignment: Alignment.bottomCenter,
         decoration: BoxDecoration(
@@ -198,7 +205,8 @@ class LogicShowCubit extends Cubit<BigShowStates> {
           //   // color: Colors.black26,
           //   // width: 7,
           // ),
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight:Radius.circular(10) ),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           color: Colors.white,
         ),
         child: Column(
@@ -214,19 +222,16 @@ class LogicShowCubit extends Cubit<BigShowStates> {
             Text(
               "${m["name"]}",
               style: TextStyle(
-                fontSize: 25,
-                color: Colors.white,
-                decorationStyle: TextDecorationStyle.double,
-                textBaseline: TextBaseline.alphabetic,
-                overflow: TextOverflow.ellipsis,
-              ),
-             textWidthBasis: TextWidthBasis.longestLine,
+                  fontSize: 25,
+                  color: Colors.white,
+                  decorationStyle: TextDecorationStyle.double,
+                  textBaseline: TextBaseline.alphabetic),
+              textWidthBasis: TextWidthBasis.longestLine,
             ),
           ],
         ),
       ),
     );
-
   }
 
   List<Color> list_color = [

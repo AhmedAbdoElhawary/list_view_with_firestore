@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,22 +12,21 @@ class FormScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create:(BuildContext context) =>LogicShowCubit(),
-    child: BlocConsumer<LogicShowCubit,BigShowStates>(
-    listener: (context, state) {},
-    builder: (context, state) {
-      LogicShowCubit cubit=LogicShowCubit.get(context);
-      return Scaffold(
-        appBar: AppBar(),
-        body: Column(
-          children: [
-            Expanded(
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                        children: [
+      create: (BuildContext context) => LogicShowCubit(),
+      child: BlocConsumer<LogicShowCubit, BigShowStates>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          LogicShowCubit cubit = LogicShowCubit.get(context);
+          return Scaffold(
+            appBar: AppBar(),
+            body: Column(
+              children: [
+                Expanded(
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: SingleChildScrollView(
+                        child: Column(children: [
                           TextFormField(
                             controller: controlName,
                             keyboardType: TextInputType.text,
@@ -156,60 +154,55 @@ class FormScreen extends StatelessWidget {
                           //     ),
                           //   ),
                           // ),
-
                         ]),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              color: Colors.white60,
-              width: double.infinity,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text("Cancel"),
-                    ),
+                Container(
+                  color: Colors.white60,
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text("Cancel"),
+                        ),
+                      ),
+                      Expanded(
+                        child: TextButton(
+                          onPressed: () {
+                            // print("${controlName.text} "
+                            //     "${controlDescription.text} "
+                            //     "${controlEmail.text} "
+                            //     "${controlImage.text}");
+                            // ListOfDeckListView().setData(controlName.text, controlDescription.text, controlEmail.text, controlImage.text);
+                            cubit.setDataInFirestore(
+                              name: controlName.text,
+                              description: controlDescription.text,
+                              email: controlEmail.text,
+                              image: controlImage.text,
+                            );
+                            // cubit.getData(LogicShowCubit.database).then((value) {
+                            //   cubit.task = value;
+                            //   print(value);
+                            // });
+                            Navigator.pop(context);
+                          },
+                          child: Text("Save"),
+                        ),
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {
-                        // print("${controlName.text} "
-                        //     "${controlDescription.text} "
-                        //     "${controlEmail.text} "
-                        //     "${controlImage.text}");
-                        // ListOfDeckListView().setData(controlName.text, controlDescription.text, controlEmail.text, controlImage.text);
-                        cubit.setDataInFirestore(
-                            name: controlName.text,
-                            description: controlDescription.text,
-                            email: controlEmail.text,
-                            image: controlImage.text,
-                        );
-                        // cubit.getData(LogicShowCubit.database).then((value) {
-                        //   cubit.task = value;
-                        //   print(value);
-                        // });
-                        Navigator.pop(context);
-                      },
-                      child: Text("Save"),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      );
-    },
-    ),
+          );
+        },
+      ),
     );
-
   }
 }
-
-
-
