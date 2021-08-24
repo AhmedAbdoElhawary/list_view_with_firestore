@@ -11,8 +11,6 @@ class CardGridView extends StatelessWidget {
     return BlocConsumer<LogicShowCubit, BigShowStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = LogicShowCubit.get(context);
-
         return StreamBuilder(
             stream: FirebaseFirestore.instance.collection("data").snapshots(),
             builder: (BuildContext context,
@@ -27,7 +25,7 @@ class CardGridView extends StatelessWidget {
                 padding: EdgeInsets.all(7),
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) =>
-                    cubit.buildOneContainerGridView(docs[index]),
+                    buildOneContainerGridView(docs[index]),
                 itemCount: docs.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   mainAxisSpacing: 15,
@@ -39,6 +37,85 @@ class CardGridView extends StatelessWidget {
               );
             });
       },
+    );
+  }
+
+  Widget buildOneContainerGridView(m) {
+    return Card(
+      shadowColor: Colors.blue,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      elevation: 6,
+      child: Container(
+        width: double.infinity,
+        alignment: Alignment.bottomCenter,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                "Done",
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Text(
+                "${m["name"]}",
+                style: TextStyle(
+                  fontSize: 25,
+                ),
+              ),
+              Text(
+                "${m["description"]}",
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black38,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                "${m["email"]}",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Text(
+                      'COMPOSE EMAIL\n(AUTHOR)',
+                    ),
+                  ),
+                  Icon(Icons.edit_outlined),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Icon(Icons.delete_outlined),
+                  SizedBox(
+                    width: 25,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

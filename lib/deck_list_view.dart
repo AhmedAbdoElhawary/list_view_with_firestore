@@ -11,8 +11,6 @@ class deckListView extends StatelessWidget {
     return BlocConsumer<LogicShowCubit, BigShowStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = LogicShowCubit.get(context);
-
         return StreamBuilder(
           stream: FirebaseFirestore.instance.collection("data").snapshots(),
           builder: (BuildContext context,
@@ -26,7 +24,7 @@ class deckListView extends StatelessWidget {
             return ListView.separated(
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) =>
-                  cubit.buildPaddingListView(docs[index]),
+                  buildPaddingListView(docs[index]),
               separatorBuilder: (context, index) => Container(
                 width: double.infinity,
                 height: 5,
@@ -36,6 +34,64 @@ class deckListView extends StatelessWidget {
           },
         );
       },
+    );
+  }
+
+  Widget buildPaddingListView(model) {
+    return Card(
+      shadowColor: Colors.blue[300],
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      elevation: 4,
+      margin: EdgeInsets.all(5.0),
+      child: Container(
+        color: Colors.white,
+        height: 105,
+        alignment: AlignmentDirectional.bottomEnd,
+        child: Row(
+          children: [
+            Image.network(
+              "${model["image"]}",
+              width: 100,
+              height: 110,
+              fit: BoxFit.fill,
+            ),
+            SizedBox(
+              width: 6,
+            ),
+            Container(
+              width: 240,
+              padding: EdgeInsets.only(top: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("${model['name']}"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    "${model["description"]}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.delete_outline),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(Icons.edit_outlined),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

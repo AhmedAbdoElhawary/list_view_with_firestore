@@ -12,8 +12,6 @@ class galleryScreenHome extends StatelessWidget {
     return BlocConsumer<LogicShowCubit, BigShowStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        var cubit = LogicShowCubit.get(context);
-
         return StreamBuilder(
             stream: FirebaseFirestore.instance.collection("data").snapshots(),
             builder: (BuildContext context,
@@ -28,7 +26,7 @@ class galleryScreenHome extends StatelessWidget {
                 padding: EdgeInsets.all(15),
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) =>
-                    cubit.buildTwoContainerGridView(docs[index]),
+                    buildTwoContainerGridView(docs[index]),
                 itemCount: docs.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   mainAxisSpacing: 20,
@@ -40,6 +38,42 @@ class galleryScreenHome extends StatelessWidget {
               );
             });
       },
+    );
+  }
+
+  Widget buildTwoContainerGridView(m) {
+    return Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shadowColor: Colors.blue,
+      elevation: 9,
+      margin: EdgeInsets.all(5.0),
+      child: Container(
+        alignment: Alignment.bottomCenter,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage("${m["image"]}"),
+            fit: BoxFit.cover,
+          ),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          color: Colors.white,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              "${m["name"]}",
+              style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.white,
+                  decorationStyle: TextDecorationStyle.double,
+                  textBaseline: TextBaseline.alphabetic),
+              textWidthBasis: TextWidthBasis.longestLine,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
