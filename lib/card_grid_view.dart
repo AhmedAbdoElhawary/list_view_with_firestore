@@ -1,12 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firestore_again/cubit/bigStates.dart';
+import 'package:firestore_again/cubit/big_states.dart';
+import 'package:firestore_again/cubit/logic_cubit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'cubit/logicCubit.dart';
-
-class galleryScreenHome extends StatelessWidget {
+class CardGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LogicShowCubit, BigShowStates>(
@@ -25,17 +24,17 @@ class galleryScreenHome extends StatelessWidget {
               final docs = snapshot.data!.docs;
 
               return GridView.builder(
-                padding: EdgeInsets.all(15),
+                padding: EdgeInsets.all(7),
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) =>
-                    cubit.buildTwoContainerGridView(docs[index]),
+                    cubit.buildOneContainerGridView(docs[index]),
                 itemCount: docs.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 20,
+                  mainAxisSpacing: 15,
                   crossAxisSpacing: 20,
                   childAspectRatio: 2 / 3,
-                  mainAxisExtent: 200,
-                  crossAxisCount: 2,
+                  mainAxisExtent: 270,
+                  crossAxisCount: 1,
                 ),
               );
             });

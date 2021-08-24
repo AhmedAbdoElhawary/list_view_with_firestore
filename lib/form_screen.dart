@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'cubit/bigStates.dart';
-import 'cubit/logicCubit.dart';
+import 'cubit/big_states.dart';
+import 'cubit/logic_cubit.dart';
 
 class FormScreen extends StatelessWidget {
   var controlName = TextEditingController();

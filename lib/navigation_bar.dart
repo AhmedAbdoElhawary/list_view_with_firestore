@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'FormScreen.dart';
-import 'cubit/bigStates.dart';
-import 'cubit/logicCubit.dart';
+import 'form_screen.dart';
+import 'cubit/big_states.dart';
+import 'cubit/logic_cubit.dart';
 
 class NavigationBar extends StatelessWidget {
   @override

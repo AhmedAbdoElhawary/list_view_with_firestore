@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firestore_again/card(GridView).dart';
-import 'package:firestore_again/cubit/bigStates.dart';
+import 'package:firestore_again/card_grid_view.dart';
+import 'package:firestore_again/cubit/big_states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../deck(list_view).dart';
-import '../gallery(ScreenHome).dart';
+import '../deck_list_view.dart';
+import '../gallery_screen_home.dart';
 
 class LogicShowCubit extends Cubit<BigShowStates> {
   LogicShowCubit() : super(ShowInitialState());

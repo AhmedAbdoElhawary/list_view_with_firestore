@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'NavigationBar.dart';
+import 'navigation_bar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
