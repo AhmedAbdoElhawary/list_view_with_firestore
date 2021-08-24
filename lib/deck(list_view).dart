@@ -35,12 +35,14 @@ class deckListView extends StatelessWidget {
               final docs = snapshot.data!.docs;
 
               return ListView.separated(
+                physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) =>cubit.buildPaddingListView(docs[index]),
                   separatorBuilder: (context, index) => Container(
                     width: double.infinity,
-                    height: 1,
+                    height: 5,
                   ),
-                  itemCount:docs.length
+                  itemCount:docs.length,
+
               );
             },
           );

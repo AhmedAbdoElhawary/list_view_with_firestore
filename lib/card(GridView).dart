@@ -106,8 +106,8 @@ class CardGridView extends StatelessWidget {
             final docs = snapshot.data!.docs;
 
               return GridView.builder(
-                  padding: EdgeInsets.all(7),
-
+                padding: EdgeInsets.all(7),
+                physics: BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) =>
                     cubit.buildOneContainerGridView(docs[index]),
 

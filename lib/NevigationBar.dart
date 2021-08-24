@@ -21,10 +21,12 @@ class NevigationBar extends StatelessWidget {
           return SafeArea(
             child: Scaffold(
               appBar: AppBar(
-                backgroundColor: cubit.list_color[cubit.c_index],
+                backgroundColor: Colors.white,
+                elevation: 2.7,
               ),
               drawer: Drawer(
                 child: Column(
+
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -99,14 +101,14 @@ class NevigationBar extends StatelessWidget {
               ),
               body: cubit.list_widget[cubit.c_index],
               bottomNavigationBar: BottomNavigationBar(
-                selectedItemColor: cubit.list_color[cubit.c_index],
+                selectedItemColor:Colors.lightBlueAccent[350],
+                // selectedItemColor: cubit.list_color[cubit.c_index],
                 currentIndex: cubit.c_index,
                 onTap: (value) {
                   cubit.getIndex(value);
                 },
                 items: [
                   BottomNavigationBarItem(
-                      backgroundColor: Colors.green,
                       icon: Icon(Icons.list_outlined),
                       label: 'list view'),
                   BottomNavigationBarItem(
@@ -119,7 +121,6 @@ class NevigationBar extends StatelessWidget {
                 onPressed: () {
                   // print("${LogicShowCubit.task}");
                   Navigator.push(
-
                     context,
                     MaterialPageRoute(builder: (context) => FormScreen()),
                   );
@@ -131,8 +132,10 @@ class NevigationBar extends StatelessWidget {
                 },
                 child: Icon(
                   Icons.add,
+                  color: Colors.black,
                 ),
-                backgroundColor: cubit.list_color[cubit.c_index],
+                backgroundColor:Colors.grey[100],
+                elevation: 12,
               ),
             ),
           );

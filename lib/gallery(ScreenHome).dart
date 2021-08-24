@@ -32,7 +32,7 @@ class galleryScreenHome extends StatelessWidget {
 
               return GridView.builder(
                 padding: EdgeInsets.all(15),
-
+                physics: BouncingScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) =>
                     cubit.buildTwoContainerGridView(docs[index]),
 

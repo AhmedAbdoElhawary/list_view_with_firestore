@@ -7,6 +7,7 @@ import 'package:firestore_again/cubit/bigStates.dart';
 import 'package:firestore_again/emailPageShow.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../deck(list_view).dart';
@@ -30,11 +31,14 @@ class LogicShowCubit extends Cubit<BigShowStates> {
   //   emit(ShowSetInListState());
   // }
   Widget buildPaddingListView(model) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 1.0),
+    return Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      elevation: 4,
+      margin:EdgeInsets.all(5.0),
       child: Container(
         color: Colors.white,
         height: 105,
+        alignment: AlignmentDirectional.bottomEnd,
         child: Row(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -53,7 +57,7 @@ class LogicShowCubit extends Cubit<BigShowStates> {
               width: 6,
             ),
             Container(
-              width: 301.42,
+              width: 280,
               padding: EdgeInsets.only(top: 15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,105 +103,116 @@ class LogicShowCubit extends Cubit<BigShowStates> {
   }
 
   Widget buildOneContainerGridView(m){
-    return Container(
+    return Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      elevation: 6,
+      child: Container(
 
-      width: double.infinity,
-      alignment: Alignment.bottomCenter,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: Colors.white,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 25,),
-            Text(
-              "Done",
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold
-              ),
-            ),
-            SizedBox(height: 40,),
-            Text(
-              "${m["name"]}",
-              style: TextStyle(
-                fontSize: 25,
-              ),
-            ),
-            Text(
-              "${m["description"]}",
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.black38,
-              ),
-            ),
-            SizedBox(height: 25,),
-            Text(
-              "${m["email"]}",
-              style: TextStyle(
-                fontSize: 16,
-
-              ),
-            ),
-            SizedBox(height: 25,),
-            Row(mainAxisSize:  MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: Text(
-                    'COMPOSE EMAIL\n(AUTHOR)',
-                  ),
+        width: double.infinity,
+        alignment: Alignment.bottomCenter,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 25,),
+              Text(
+                "Done",
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold
                 ),
-                Icon(Icons.edit_outlined),
-                SizedBox(width: 30,),
-                Icon(Icons.delete_outlined),
-                SizedBox(width: 25,),
-              ],
-            ),
-          ],
+              ),
+              SizedBox(height: 40,),
+              Text(
+                "${m["name"]}",
+                style: TextStyle(
+                  fontSize: 25,
+                ),
+              ),
+              Text(
+                "${m["description"]}",
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.black38,
+                ),
+              ),
+              SizedBox(height: 25,),
+              Text(
+                "${m["email"]}",
+                style: TextStyle(
+                  fontSize: 16,
 
+                ),
+              ),
+              SizedBox(height: 25,),
+              Row(mainAxisSize:  MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Text(
+                      'COMPOSE EMAIL\n(AUTHOR)',
+                    ),
+                  ),
+                  Icon(Icons.edit_outlined),
+                  SizedBox(width: 30,),
+                  Icon(Icons.delete_outlined),
+                  SizedBox(width: 25,),
+                ],
+              ),
+            ],
+
+          ),
         ),
       ),
     );
   }
 
   Widget buildTwoContainerGridView(m){
-    return  Container(
-      alignment: Alignment.bottomCenter,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage("${m["image"]}"),
-          fit: BoxFit.cover,
-        ),
-        // border: Border.symmetric(horizontal: BorderSide(width: 7),
-        //   // color: Colors.black26,
-        //   // width: 7,
-        // ),
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight:Radius.circular(10) ),
-        color: Colors.white,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          // Image.network(
-          //   "${m["image"]}",
-          //   width: 160,
-          //   height: 170,
-          //   fit: BoxFit.fill,
-          // ),
-          Text(
-            "${m["name"]}",
-            style: TextStyle(
-              fontSize: 25,
-              backgroundColor: Colors.white60,
-
-            ),
-
+    return  Card(
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      elevation: 9,
+      margin:EdgeInsets.all(5.0),
+      child: Container(
+        alignment: Alignment.bottomCenter,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage("${m["image"]}"),
+            fit: BoxFit.cover,
           ),
-        ],
+          // border: Border.symmetric(horizontal: BorderSide(width: 7),
+          //   // color: Colors.black26,
+          //   // width: 7,
+          // ),
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(10),topRight:Radius.circular(10) ),
+          color: Colors.white,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            // Image.network(
+            //   "${m["image"]}",
+            //   width: 160,
+            //   height: 170,
+            //   fit: BoxFit.fill,
+            // ),
+            Text(
+              "${m["name"]}",
+              style: TextStyle(
+                fontSize: 25,
+                color: Colors.white,
+                decorationStyle: TextDecorationStyle.double,
+                textBaseline: TextBaseline.alphabetic,
+                overflow: TextOverflow.ellipsis,
+              ),
+             textWidthBasis: TextWidthBasis.longestLine,
+            ),
+          ],
+        ),
       ),
     );
 

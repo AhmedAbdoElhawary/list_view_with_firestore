@@ -71,9 +71,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'AppSheet',
       theme: ThemeData(
-        scaffoldBackgroundColor: Color.fromARGB(228, 247, 250, 247),
-        appBarTheme: AppBarTheme(
-        ),
+        scaffoldBackgroundColor: Colors.white,
       ),
       home:NevigationBar(),
     );
