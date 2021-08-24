@@ -212,10 +212,10 @@ class LogicShowCubit extends Cubit<BigShowStates> {
     required String image,
   }) {
     FirebaseFirestore.instance.collection('data').add({
-      'name': "$name",
-      'description': '$description',
-      "email": "$email",
-      "image": "$image",
+      'name': name,
+      'description': description,
+      "email": email,
+      "image": image,
     });
     emit(ShowInsertFirestoreState());
   }
