@@ -5,6 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'common_ui/grid_sliver_delegates.dart';
+
+var db = FirebaseFirestore.instance;
+
+typedef dbDoc = QueryDocumentSnapshot<Map<String, dynamic>>;
+typedef dbDocData = Map<String, dynamic>;
+
 class CardGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -12,35 +19,30 @@ class CardGridView extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return StreamBuilder(
-            stream: FirebaseFirestore.instance.collection("data").snapshots(),
+            stream: db.collection("data").snapshots(),
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              if (snapshot.connectionState == ConnectionState.waiting)
                 return CircularProgressIndicator();
-              }
-
               final docs = snapshot.data!.docs;
-
-              return GridView.builder(
-                padding: EdgeInsets.all(7),
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) =>
-                    buildOneContainerGridView(docs[index]),
-                itemCount: docs.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 15,
-                  crossAxisSpacing: 20,
-                  childAspectRatio: 2 / 3,
-                  mainAxisExtent: 270,
-                  crossAxisCount: 1,
-                ),
-              );
+              return CardGridViewBuilder(docs);
             });
       },
     );
   }
 
-  Widget buildOneContainerGridView(m) {
+  GridView CardGridViewBuilder(List<dbDoc> docs) {
+    return GridView.builder(
+      padding: EdgeInsets.all(7),
+      physics: BouncingScrollPhysics(),
+      gridDelegate: CardGridSliverDelegate(),
+      itemCount: docs.length,
+      itemBuilder: (BuildContext context, int index) =>
+          CardGridViewItem(docs[index].data()),
+    );
+  }
+
+  Widget CardGridViewItem(dbDocData docData) {
     return Card(
       shadowColor: Colors.blue,
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -56,66 +58,62 @@ class CardGridView extends StatelessWidget {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 25,
-              ),
-              Text(
-                "Done",
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Text(
-                "${m["name"]}",
-                style: TextStyle(
-                  fontSize: 25,
-                ),
-              ),
-              Text(
-                "${m["description"]}",
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black38,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Text(
-                "${m["email"]}",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'COMPOSE EMAIL\n(AUTHOR)',
-                    ),
-                  ),
-                  Icon(Icons.edit_outlined),
-                  SizedBox(
-                    width: 30,
-                  ),
-                  Icon(Icons.delete_outlined),
-                  SizedBox(
-                    width: 25,
-                  ),
-                ],
-              ),
-            ],
+            children: CardGridViewItemContent(docData),
           ),
         ),
       ),
     );
   }
+
+  List<Widget> CardGridViewItemContent(dbDocData docData) {
+    return [
+      CardViewDivider(40),
+      NameText(docData),
+      DescriptionText(docData),
+      CardViewDivider(25),
+      EmailText(docData),
+      CardViewDivider(25),
+      CardViewActionItems(),
+    ];
+  }
+
+  Row CardViewActionItems() {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(child: Text('COMPOSE EMAIL\n(AUTHOR)')),
+        Icon(Icons.edit_outlined),
+        CardViewDivider(30),
+        Icon(Icons.delete_outlined),
+        CardViewDivider(25)
+      ],
+    );
+  }
+
+  Text NameText(dbDocData docData) {
+    return Text(
+      docData['name'],
+      style: TextStyle(fontSize: 25),
+    );
+  }
+
+  Text DescriptionText(dbDocData docData) {
+    return Text(
+      docData["description"],
+      style: TextStyle(fontSize: 15, color: Colors.black38),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Text EmailText(dbDocData docData) {
+    return Text(
+      docData["email"],
+      style: TextStyle(
+        fontSize: 16,
+      ),
+    );
+  }
+
+  SizedBox CardViewDivider(double height) => SizedBox(height: height);
 }
