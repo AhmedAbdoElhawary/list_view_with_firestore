@@ -47,30 +47,9 @@ class FormScreen extends StatelessWidget {
                     width: double.infinity,
                     child: Row(
                       children: [
-                        Expanded(
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text("Cancel"),
-                          ),
-                        ),
-                        Expanded(
-                          child: TextButton(
-                            onPressed: () {
-                              if (formKey.currentState!.validate()) {
-                                Navigator.pop(context);
-                                cubit.setDataInFirestore(
-                                  name: controlName.text,
-                                  description: controlDescription.text,
-                                  email: controlEmail.text,
-                                  image: controlImage.text,
-                                );
-                              }
-                            },
-                            child: Text("Save"),
-                          ),
-                        ),
+                        TextButtonMethod(sendDataToFirestore: false,context: context,text: "Cancel"),
+
+                        TextButtonMethod(sendDataToFirestore: true,context: context,text: "Save"),
                       ],
                     ),
                   ),
@@ -98,9 +77,34 @@ class FormScreen extends StatelessWidget {
       ),
     );
   }
+
   Widget SizedBoxMethod(){
     return SizedBox(
       height: 15,
+    );
+  }
+
+  Widget TextButtonMethod({required bool sendDataToFirestore,required var context, required String text}){
+
+    return Expanded(
+      child: TextButton(
+        onPressed: () {
+          if(sendDataToFirestore!=false){
+            if (formKey.currentState!.validate()) {
+              LogicShowCubit.get(context).setDataInFirestore(
+                name: controlName.text,
+                description: controlDescription.text,
+                email: controlEmail.text,
+                image: controlImage.text,
+              );
+              Navigator.pop(context);
+            }
+          }
+          else if (text=="Cancel")
+            Navigator.pop(context);
+        },
+        child: Text(text),
+      ),
     );
   }
 }

@@ -6,8 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LogicShowCubit extends Cubit<BigShowStates> {
   LogicShowCubit() : super(ShowInitialState());
 
-  static LogicShowCubit get(context) =>
-      BlocProvider.of<LogicShowCubit>(context);
+  static LogicShowCubit get(context) => BlocProvider.of<LogicShowCubit>(context);
 
   int c_index = 0;
   getIndex(int i) {
