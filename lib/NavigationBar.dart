@@ -4,7 +4,7 @@ import 'FormScreen.dart';
 import 'cubit/bigStates.dart';
 import 'cubit/logicCubit.dart';
 
-class NevigationBar extends StatelessWidget {
+class NavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
