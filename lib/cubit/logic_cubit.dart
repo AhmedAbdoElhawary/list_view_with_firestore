@@ -1,9 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_again/cubit/big_states.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LogicShowCubit extends Cubit<BigShowStates> {
@@ -17,12 +14,6 @@ class LogicShowCubit extends Cubit<BigShowStates> {
     c_index = i;
     emit(ShowGetIndexState());
   }
-
-  List<Color> list_color = [
-    Colors.green,
-    Colors.blue,
-    Colors.teal,
-  ];
 
   setDataInFirestore({
     required String name,
