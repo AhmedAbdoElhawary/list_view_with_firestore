@@ -59,7 +59,6 @@ class InformationPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) =>new FormScreen(check: true,model:model,id: id,)),
-
             );
           },
           elevation: 20,

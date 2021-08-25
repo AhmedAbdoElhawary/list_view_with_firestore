@@ -37,14 +37,11 @@ class FormScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(15.0),
                   child: SingleChildScrollView(
                     child: Column(children: [
-                      TextFromFieldMethod(nameOfController: controlName, typeOfText: TextInputType.text, labelText: "the Name"
-                      ),
+                      TextFromFieldMethod(nameOfController: controlName, typeOfText: TextInputType.text, labelText: "the Name"),
                       SizedBoxMethod(),
-                      TextFromFieldMethod(nameOfController: controlDescription, typeOfText: TextInputType.text, labelText: "Description"
-                      ),
+                      TextFromFieldMethod(nameOfController: controlDescription, typeOfText: TextInputType.text, labelText: "Description"),
                       SizedBoxMethod(),
-                      TextFromFieldMethod(nameOfController: controlEmail, typeOfText: TextInputType.emailAddress, labelText: "Email"
-                      ),
+                      TextFromFieldMethod(nameOfController: controlEmail, typeOfText: TextInputType.emailAddress, labelText: "Email"),
                       SizedBoxMethod(),
                       TextFromFieldMethod(nameOfController: controlImage, typeOfText: TextInputType.url, labelText: "Image"
                       ),
@@ -59,6 +56,7 @@ class FormScreen extends StatelessWidget {
               child: Row(
                 children: [
                   TextButtonMethod(sendDataToFirestore: false, context: context, text: "Cancel"),
+
                   TextButtonMethod(sendDataToFirestore: true, context: context, text: "Save "),
                 ],
               ),
@@ -77,23 +75,6 @@ class FormScreen extends StatelessWidget {
         }
         return null;
       },
-
-      //     final RegExp emailRegex = new RegExp(
-      //     r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
-      //
-      //
-      // TextFormField(
-      // ...
-      // keyboardType: TextInputType.emailAddress,
-      // validator: (value) {
-      //   if (!emailRegex.hasMatch(value)) {
-      //     return 'Please enter valid email';
-      //   }
-      //   return null;
-      // },
-      // ...
-      // ),
-
       controller: nameOfController,
       keyboardType: typeOfText,
       decoration: InputDecoration(
@@ -103,21 +84,12 @@ class FormScreen extends StatelessWidget {
     );
   }
 
-  Widget SizedBoxMethod() {
-    return SizedBox(
-      height: 15,
-    );
-  }
+  Widget SizedBoxMethod() => SizedBox(height: 15);
 
   Widget TextButtonMethod({required bool sendDataToFirestore, required var context, required String text}) {
     return Expanded(
       child: TextButton(
         onPressed: () {
-          print(id);
-          print(controlName.text);
-          print(controlDescription.text);
-          print(controlEmail.text);
-          print(controlImage.text);
           if (sendDataToFirestore) {
             if (formKey.currentState!.validate()) {
               if(check){
@@ -151,16 +123,4 @@ class FormScreen extends StatelessWidget {
     );
   }
 
-// Widget TextMethod({required String text, required double fontSize, required FontWeight fontWeight}) {
-//   return Text(
-//     text,
-//     style: TextStyle(
-//       fontSize: fontSize,
-//       fontWeight: fontWeight,
-//       textBaseline: TextBaseline.alphabetic,
-//       overflow: TextOverflow.ellipsis,
-//     ),
-//     maxLines: 2,
-//   );
-// }
 }
