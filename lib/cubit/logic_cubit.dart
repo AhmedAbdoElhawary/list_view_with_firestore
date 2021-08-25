@@ -14,18 +14,27 @@ class LogicShowCubit extends Cubit<BigShowStates> {
     emit(ShowGetIndexState());
   }
 
+  var fire=FirebaseFirestore.instance.collection('data');
+
   setDataInFirestore({
     required String name,
     required String description,
     required String email,
     required String image,
   }) {
-    FirebaseFirestore.instance.collection('data').add({
+    fire.add({
       'name': name,
       'description': description,
       "email": email,
       "image": image,
     });
     emit(ShowInsertFirestoreState());
+  }
+  deleteDataFromFirestore({required String id}){
+    fire.doc(id)
+        .delete()
+        .then((value) => print("deleting successfully"))
+        .catchError((e) => print(
+        "$e \nerror while deleting the element"));
   }
 }
