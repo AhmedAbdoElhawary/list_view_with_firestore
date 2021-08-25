@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_again/cubit/big_states.dart';
 import 'package:firestore_again/cubit/logic_cubit.dart';
+import 'package:firestore_again/form_screen.dart';
 import 'package:firestore_again/information_of_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -38,8 +39,7 @@ class deckListView extends StatelessWidget {
     );
   }
 
-  Widget buildPaddingListView(
-      {required model, var context, required String id}) {
+  Widget buildPaddingListView({required model, var context, required String id}) {
     return InkWell(
       child: Card(
         shadowColor: Colors.blue[300],
@@ -54,7 +54,7 @@ class deckListView extends StatelessWidget {
             children: [
               Image.network(
                 "${model["image"]}",
-                width: 100,
+                width: 130,
                 height: 110,
                 fit: BoxFit.fill,
               ),
@@ -86,7 +86,13 @@ class deckListView extends StatelessWidget {
                           icon: Icon(Icons.delete_outline),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) =>new FormScreen(model: model,id: id,check:true)),
+
+                            );
+                          },
                           icon: Icon(Icons.edit_outlined),
                         ),
                       ],

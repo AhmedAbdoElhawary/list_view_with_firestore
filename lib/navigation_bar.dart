@@ -47,9 +47,10 @@ class NavigationBar extends StatelessWidget {
   FloatingActionButton FloatingActionBtn(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
+        // LogicShowCubit.get(context).setCheckItem(b: false);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => FormScreen()),
+          MaterialPageRoute(builder: (context) =>new FormScreen(check: false,id: "")),
         );
       },
       child: Icon(

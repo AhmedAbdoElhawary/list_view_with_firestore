@@ -111,6 +111,7 @@ class CardGridView extends StatelessWidget {
     return Text(
       docData['name'],
       style: TextStyle(fontSize: 25),
+      maxLines: 1,
     );
   }
 

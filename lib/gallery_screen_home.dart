@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_again/cubit/big_states.dart';
-import 'package:firestore_again/information_of_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,9 +19,8 @@ class galleryScreenHome extends StatelessWidget {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return CircularProgressIndicator();
               }
-
               final docs = snapshot.data!.docs;
-
+              // LogicShowCubit.get(context).model=docs;
               return GridView.builder(
                 padding: EdgeInsets.all(15),
                 physics: BouncingScrollPhysics(),
@@ -71,6 +69,7 @@ class galleryScreenHome extends StatelessWidget {
                     color: Colors.white,
                     decorationStyle: TextDecorationStyle.double,
                     textBaseline: TextBaseline.alphabetic),
+                maxLines: 1,
                 textWidthBasis: TextWidthBasis.longestLine,
               ),
             ],
@@ -78,10 +77,10 @@ class galleryScreenHome extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => InformationPage(model)),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => InformationPage(model,id)),
+        // );
       },
     );
   }

@@ -1,10 +1,8 @@
-import 'package:firestore_again/form_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InformationPage extends StatelessWidget {
   var model;
-
   InformationPage(this.model);
 
   @override
@@ -53,10 +51,13 @@ class InformationPage extends StatelessWidget {
             color: Colors.black87,size: 25,
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => FormScreen()),
-            );
+            // EditPage().dataOfItem(model: model);
+            // LogicShowCubit.get(context).setCheckItem(b: true);
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) =>new editPage(model,id)),
+            //
+            // );
           },
           elevation: 20,
           backgroundColor: Colors.white,

@@ -1,8 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firestore_again/cubit/logic_cubit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'cubit/big_states.dart';
-import 'cubit/logic_cubit.dart';
 
 class FormScreen extends StatelessWidget {
   var controlName = TextEditingController();
@@ -10,56 +9,66 @@ class FormScreen extends StatelessWidget {
   var controlEmail = TextEditingController();
   var controlImage = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  var model;
+  String id;
+  bool check;
+  FormScreen({var model, required this.id, required this.check}){
+    this.model=model;
+    if (check){
+      controlName.text=model["name"];
+      controlDescription.text=model["description"];
+      controlEmail.text=model["email"];
+      controlImage.text=model["image"];
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => LogicShowCubit(),
-      child: BlocConsumer<LogicShowCubit, BigShowStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(),
-            body: Form(key:formKey,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: SingleChildScrollView(
-                          child: Column(children: [
-                            TextFromFieldMethod(nameOfController: controlName, typeOfText: TextInputType.text, labelText: "the Name"),
-                            SizedBoxMethod(),
-                            TextFromFieldMethod(nameOfController: controlDescription, typeOfText: TextInputType.text, labelText: "Description"),
-                            SizedBoxMethod(),
-                            TextFromFieldMethod(nameOfController: controlEmail, typeOfText: TextInputType.emailAddress, labelText: "Email"),
-                            SizedBoxMethod(),
-                            TextFromFieldMethod(nameOfController: controlImage, typeOfText: TextInputType.url, labelText: "Image"),
-                          ]),
-                        ),
+    return Scaffold(
+      appBar: AppBar(),
+      body: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: SingleChildScrollView(
+                    child: Column(children: [
+                      TextFromFieldMethod(nameOfController: controlName, typeOfText: TextInputType.text, labelText: "the Name"
                       ),
-                    ),
+                      SizedBoxMethod(),
+                      TextFromFieldMethod(nameOfController: controlDescription, typeOfText: TextInputType.text, labelText: "Description"
+                      ),
+                      SizedBoxMethod(),
+                      TextFromFieldMethod(nameOfController: controlEmail, typeOfText: TextInputType.emailAddress, labelText: "Email"
+                      ),
+                      SizedBoxMethod(),
+                      TextFromFieldMethod(nameOfController: controlImage, typeOfText: TextInputType.url, labelText: "Image"
+                      ),
+                    ]),
                   ),
-                  Container(
-                    color: Colors.white60,
-                    width: double.infinity,
-                    child: Row(
-                      children: [
-                        TextButtonMethod(sendDataToFirestore: false,context: context,text: "Cancel"),
-
-                        TextButtonMethod(sendDataToFirestore: true,context: context,text: "Save "),
-                      ],
-                    ),
-                  ),
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.white60,
+              width: double.infinity,
+              child: Row(
+                children: [
+                  TextButtonMethod(sendDataToFirestore: false, context: context, text: "Cancel"),
+                  TextButtonMethod(sendDataToFirestore: true, context: context, text: "Save "),
                 ],
               ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }
-  Widget TextFromFieldMethod({required var nameOfController,required var typeOfText,required String labelText}){
+
+  Widget TextFromFieldMethod ({required TextEditingController nameOfController, required var typeOfText, required String labelText}) {
     return TextFormField(
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -67,6 +76,23 @@ class FormScreen extends StatelessWidget {
         }
         return null;
       },
+
+      //     final RegExp emailRegex = new RegExp(
+      //     r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$");
+      //
+      //
+      // TextFormField(
+      // ...
+      // keyboardType: TextInputType.emailAddress,
+      // validator: (value) {
+      //   if (!emailRegex.hasMatch(value)) {
+      //     return 'Please enter valid email';
+      //   }
+      //   return null;
+      // },
+      // ...
+      // ),
+
       controller: nameOfController,
       keyboardType: typeOfText,
       decoration: InputDecoration(
@@ -76,33 +102,64 @@ class FormScreen extends StatelessWidget {
     );
   }
 
-  Widget SizedBoxMethod(){
+  Widget SizedBoxMethod() {
     return SizedBox(
       height: 15,
     );
   }
 
-  Widget TextButtonMethod({required bool sendDataToFirestore,required var context, required String text}){
-
+  Widget TextButtonMethod({required bool sendDataToFirestore, required var context, required String text}) {
     return Expanded(
       child: TextButton(
         onPressed: () {
-          if(sendDataToFirestore!=false){
+          print(id);
+          print(controlName.text);
+          print(controlDescription.text);
+          print(controlEmail.text);
+          print(controlImage.text);
+          if (sendDataToFirestore) {
             if (formKey.currentState!.validate()) {
-              LogicShowCubit.get(context).setDataInFirestore(
-                name: controlName.text,
-                description: controlDescription.text,
-                email: controlEmail.text,
-                image: controlImage.text,
-              );
-              Navigator.pop(context);
+              if(check){
+                FirebaseFirestore.instance.collection('data')
+                    .doc(id)
+                    .update({
+                  'name': controlName.text,
+                  'description': controlDescription.text,
+                  "email":controlEmail.text,
+                  "image": controlImage.text,})
+                    .then((value) => print("User Updated"))
+                    .catchError((error) => print("Failed to update user: $error"));
+                Navigator.pop(context);
+              }
+              else{
+                FirebaseFirestore.instance.collection('data').add({
+                  "name": controlName.text,
+                  "description": controlDescription.text,
+                  "email": controlEmail.text,
+                  "image": controlImage.text,
+                });
+                Navigator.pop(context);
+              }
             }
-          }
-          else if (text=="Cancel")
-            Navigator.pop(context);
+
+          } else if (text == "Cancel") Navigator.pop(context);
+
         },
         child: Text(text),
       ),
     );
   }
+
+// Widget TextMethod({required String text, required double fontSize, required FontWeight fontWeight}) {
+//   return Text(
+//     text,
+//     style: TextStyle(
+//       fontSize: fontSize,
+//       fontWeight: fontWeight,
+//       textBaseline: TextBaseline.alphabetic,
+//       overflow: TextOverflow.ellipsis,
+//     ),
+//     maxLines: 2,
+//   );
+// }
 }
