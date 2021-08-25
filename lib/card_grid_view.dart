@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_again/cubit/big_states.dart';
 import 'package:firestore_again/cubit/logic_cubit.dart';
+import 'package:firestore_again/information_of_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,30 +39,38 @@ class CardGridView extends StatelessWidget {
       gridDelegate: CardGridSliverDelegate(),
       itemCount: docs.length,
       itemBuilder: (BuildContext context, int index) =>
-          CardGridViewItem(docs[index].data()),
+          CardGridViewItem(docs[index].data(),context),
     );
   }
 
-  Widget CardGridViewItem(dbDocData docData) {
-    return Card(
-      shadowColor: Colors.blue,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      elevation: 6,
-      child: Container(
-        width: double.infinity,
-        alignment: Alignment.bottomCenter,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: Colors.white,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: CardGridViewItemContent(docData),
+  Widget CardGridViewItem(dbDocData docData,var context) {
+    return InkWell(
+      child: Card(
+        shadowColor: Colors.blue,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        elevation: 6,
+        child: Container(
+          width: double.infinity,
+          alignment: Alignment.bottomCenter,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            color: Colors.white,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: CardGridViewItemContent(docData),
+            ),
           ),
         ),
       ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => InformationPage(docData)),
+        );
+      },
     );
   }
 
