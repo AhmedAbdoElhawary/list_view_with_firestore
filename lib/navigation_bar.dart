@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'card_grid_view.dart';
 import 'deck_list_view.dart';
 import 'form_screen.dart';
-import 'cubit/big_states.dart';
-import 'cubit/logic_cubit.dart';
 import 'gallery_screen_home.dart';
 
 List<Widget> list_widget = [
@@ -13,25 +10,24 @@ List<Widget> list_widget = [
   galleryScreenHome(),
 ];
 
-class NavigationBar extends StatelessWidget {
+int c_index = 0;
+
+class NavigationBar extends StatefulWidget {
+
+  @override
+  State<NavigationBar> createState() => _NavigationBarState();
+}
+
+class _NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LogicShowCubit(),
-      child: BlocConsumer<LogicShowCubit, BigShowStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          LogicShowCubit cubit = LogicShowCubit.get(context);
-          return SafeArea(
-            child: Scaffold(
-              appBar: MyAppBar(),
-              drawer: AppDrawer(),
-              body: list_widget[cubit.c_index],
-              bottomNavigationBar: BottomNavBar(cubit),
-              floatingActionButton: FloatingActionBtn(context),
-            ),
-          );
-        },
+    return SafeArea(
+      child: Scaffold(
+        appBar: MyAppBar(),
+        drawer: AppDrawer(),
+        body: list_widget[c_index],
+        bottomNavigationBar: BottomNavBar(),
+        floatingActionButton: FloatingActionBtn(context),
       ),
     );
   }
@@ -61,15 +57,19 @@ class NavigationBar extends StatelessWidget {
     );
   }
 
-  BottomNavigationBar BottomNavBar(LogicShowCubit cubit) {
+  BottomNavigationBar BottomNavBar() {
     BottomNavigationBarItem BottomNavIcon(IconData iconData, String label) {
       return BottomNavigationBarItem(icon: Icon(iconData), label: label);
     }
 
     return BottomNavigationBar(
       selectedItemColor: Colors.lightBlueAccent[350],
-      currentIndex: cubit.c_index,
-      onTap: (value) => cubit.getIndex(value),
+      currentIndex: c_index,
+      onTap: (value) {
+        setState(() {
+          c_index = value;
+        });
+      },
       items: [
         BottomNavIcon(Icons.list_outlined, 'List View'),
         BottomNavIcon(Icons.credit_card_sharp, 'Card'),

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firestore_again/cubit/big_states.dart';
-import 'package:firestore_again/cubit/logic_cubit.dart';
+import 'package:firestore_again/firebase_firestore/Firestore.dart';
 import 'package:firestore_again/form_screen.dart';
 import 'package:firestore_again/information_of_item_page.dart';
 import 'package:flutter/material.dart';
@@ -17,20 +16,15 @@ typedef dbDocData = Map<String, dynamic>;
 class CardGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LogicShowCubit, BigShowStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return StreamBuilder(
-            stream: db.collection("data").snapshots(),
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting)
-                return CircularProgressIndicator();
-              final docs = snapshot.data!.docs;
-              return CardGridViewBuilder(docs);
-            });
-      },
-    );
+    return StreamBuilder(
+        stream: db.collection("data").snapshots(),
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting)
+            return CircularProgressIndicator();
+          final docs = snapshot.data!.docs;
+          return CardGridViewBuilder(docs);
+        });
   }
 
   GridView CardGridViewBuilder(List<dbDoc> docs) {
@@ -106,7 +100,7 @@ class CardGridView extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.delete_outline),
           onPressed: () {
-            LogicShowCubit.get(context).deleteDataFromFirestore(id: id);
+            FirestoreOperation().deleteDataFromFirestore(id: id);
           },
         ),
         CardViewDivider(45)

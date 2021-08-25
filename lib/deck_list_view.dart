@@ -1,39 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firestore_again/cubit/big_states.dart';
-import 'package:firestore_again/cubit/logic_cubit.dart';
+import 'package:firestore_again/firebase_firestore/Firestore.dart';
 import 'package:firestore_again/form_screen.dart';
 import 'package:firestore_again/information_of_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class deckListView extends StatelessWidget {
   var fire = FirebaseFirestore.instance.collection("data");
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LogicShowCubit, BigShowStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return StreamBuilder(
-          stream: fire.snapshots(),
-          builder: (BuildContext context,
-              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            }
-            final docs = snapshot.data!.docs;
+    return StreamBuilder(
+      stream: fire.snapshots(),
+      builder: (BuildContext context,
+          AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+        final docs = snapshot.data!.docs;
 
-            return ListView.separated(
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) => buildPaddingListView(
-                  model: docs[index], context: context, id: docs[index].id),
-              separatorBuilder: (context, index) => Container(
-                width: double.infinity,
-                height: 5,
-              ),
-              itemCount: docs.length,
-            );
-          },
+        return ListView.separated(
+          physics: BouncingScrollPhysics(),
+          itemBuilder: (context, index) => buildPaddingListView(
+              model: docs[index], context: context, id: docs[index].id),
+          separatorBuilder: (context, index) => Container(
+            width: double.infinity,
+            height: 5,
+          ),
+          itemCount: docs.length,
         );
       },
     );
@@ -81,7 +74,7 @@ class deckListView extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () async {
-                            LogicShowCubit.get(context).deleteDataFromFirestore(id: id);
+                            FirestoreOperation().deleteDataFromFirestore(id: id);
                           },
                           icon: Icon(Icons.delete_outline),
                         ),
