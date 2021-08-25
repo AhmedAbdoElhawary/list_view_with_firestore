@@ -1,12 +1,16 @@
+import 'package:firestore_again/cubit/logic_cubit.dart';
+import 'package:firestore_again/form_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InformationPage extends StatelessWidget {
   var model;
-  InformationPage(this.model);
+  String id;
+  InformationPage({required this.model,required this.id});
 
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -51,13 +55,12 @@ class InformationPage extends StatelessWidget {
             color: Colors.black87,size: 25,
           ),
           onPressed: () {
-            // EditPage().dataOfItem(model: model);
-            // LogicShowCubit.get(context).setCheckItem(b: true);
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) =>new editPage(model,id)),
-            //
-            // );
+            print(id);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>new FormScreen(check: true,model:model,id: id,)),
+
+            );
           },
           elevation: 20,
           backgroundColor: Colors.white,
@@ -65,6 +68,7 @@ class InformationPage extends StatelessWidget {
         ),
       ),
     );
+
   }
 
   Widget TextMethod(

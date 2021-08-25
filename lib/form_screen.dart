@@ -10,9 +10,10 @@ class FormScreen extends StatelessWidget {
   var controlImage = TextEditingController();
   final formKey = GlobalKey<FormState>();
   var model;
-  String id;
+  var id;
   bool check;
-  FormScreen({var model, required this.id, required this.check}){
+  FormScreen({var model,var id, required this.check}){
+    this.id=id;
     this.model=model;
     if (check){
       controlName.text=model["name"];

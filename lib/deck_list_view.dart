@@ -107,7 +107,7 @@ class deckListView extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InformationPage(model)),
+          MaterialPageRoute(builder: (context) => InformationPage(model: model,id:id,)),
         );
       },
     );

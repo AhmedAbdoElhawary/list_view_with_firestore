@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_again/cubit/big_states.dart';
 import 'package:firestore_again/cubit/logic_cubit.dart';
+import 'package:firestore_again/form_screen.dart';
 import 'package:firestore_again/information_of_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -68,7 +69,7 @@ class CardGridView extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InformationPage(docData)),
+          MaterialPageRoute(builder: (context) => InformationPage(model:docData,id: id,)),
         );
       },
     );
@@ -82,18 +83,24 @@ class CardGridView extends StatelessWidget {
       CardViewDivider(25),
       EmailText(docData),
       CardViewDivider(25),
-      CardViewActionItems(context,id),
+      CardViewActionItems(docData,context,id),
     ];
   }
 
-  Row CardViewActionItems(var context,String id) {
+  Row CardViewActionItems(var docData,var context,String id) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
         Expanded(child: Text('COMPOSE EMAIL\n(AUTHOR)')),
         IconButton(
           icon: Icon(Icons.edit_outlined),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>new FormScreen(check: true,model:docData,id: id,)),
+
+            );
+          },
         ),
         CardViewDivider(35),
         IconButton(
