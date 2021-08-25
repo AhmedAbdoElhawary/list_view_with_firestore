@@ -4,8 +4,6 @@ import 'package:firestore_again/form_screen.dart';
 import 'package:firestore_again/information_of_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'common_ui/grid_sliver_delegates.dart';
 
 var db = FirebaseFirestore.instance;
@@ -135,4 +133,5 @@ class CardGridView extends StatelessWidget {
   }
 
   SizedBox CardViewDivider(double height) => SizedBox(height: height);
+
 }

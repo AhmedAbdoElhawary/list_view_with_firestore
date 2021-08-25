@@ -51,24 +51,16 @@ class deckListView extends StatelessWidget {
                 height: 110,
                 fit: BoxFit.fill,
               ),
-              SizedBox(
-                width: 6,
-              ),
+              SizedBox(width: 6),
               Container(
                 width: 240,
                 padding: EdgeInsets.only(top: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("${model['name']}"),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "${model["description"]}",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    TextMethod(model["name"]),
+                    SizedBox(height: 10),
+                    TextMethod(model["description"]),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -81,9 +73,8 @@ class deckListView extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) =>new FormScreen(model: model,id: id,check:true)),
-
+                              context,MaterialPageRoute(builder: (context) =>
+                                new FormScreen(model: model, id: id, check: true))
                             );
                           },
                           icon: Icon(Icons.edit_outlined),
@@ -98,11 +89,18 @@ class deckListView extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => InformationPage(model: model,id:id,)),
+        Navigator.push(context,MaterialPageRoute(builder: (context) =>
+            InformationPage(model: model, id: id)),
         );
       },
+    );
+  }
+
+  Text TextMethod(model) {
+    return Text(
+      model,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
