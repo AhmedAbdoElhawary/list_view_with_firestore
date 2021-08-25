@@ -81,7 +81,6 @@ class deckListView extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () async {
-                            print(id);
                             LogicShowCubit.get(context).deleteDataFromFirestore(id: id);
                           },
                           icon: Icon(Icons.delete_outline),

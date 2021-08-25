@@ -39,11 +39,11 @@ class CardGridView extends StatelessWidget {
       gridDelegate: CardGridSliverDelegate(),
       itemCount: docs.length,
       itemBuilder: (BuildContext context, int index) =>
-          CardGridViewItem(docs[index].data(),context),
+          CardGridViewItem(docs[index].data(), context,docs[index].id),
     );
   }
 
-  Widget CardGridViewItem(dbDocData docData,var context) {
+  Widget CardGridViewItem(dbDocData docData, var context,String id) {
     return InkWell(
       child: Card(
         shadowColor: Colors.blue,
@@ -60,7 +60,7 @@ class CardGridView extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: CardGridViewItemContent(docData),
+              children: CardGridViewItemContent(docData,context,id),
             ),
           ),
         ),
@@ -74,7 +74,7 @@ class CardGridView extends StatelessWidget {
     );
   }
 
-  List<Widget> CardGridViewItemContent(dbDocData docData) {
+  List<Widget> CardGridViewItemContent(dbDocData docData,var context,String id) {
     return [
       CardViewDivider(40),
       NameText(docData),
@@ -82,19 +82,27 @@ class CardGridView extends StatelessWidget {
       CardViewDivider(25),
       EmailText(docData),
       CardViewDivider(25),
-      CardViewActionItems(),
+      CardViewActionItems(context,id),
     ];
   }
 
-  Row CardViewActionItems() {
+  Row CardViewActionItems(var context,String id) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
         Expanded(child: Text('COMPOSE EMAIL\n(AUTHOR)')),
-        Icon(Icons.edit_outlined),
-        CardViewDivider(30),
-        Icon(Icons.delete_outlined),
-        CardViewDivider(25)
+        IconButton(
+          icon: Icon(Icons.edit_outlined),
+          onPressed: () {},
+        ),
+        CardViewDivider(35),
+        IconButton(
+          icon: Icon(Icons.delete_outline),
+          onPressed: () {
+            LogicShowCubit.get(context).deleteDataFromFirestore(id: id);
+          },
+        ),
+        CardViewDivider(45)
       ],
     );
   }
