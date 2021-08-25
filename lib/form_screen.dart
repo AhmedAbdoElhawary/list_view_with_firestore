@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firestore_again/firebase_firestore/Firestore.dart';
 import 'package:flutter/material.dart';
 
 class FormScreen extends StatelessWidget {
@@ -13,6 +13,7 @@ class FormScreen extends StatelessWidget {
   FormScreen({var model,var id, required this.check}){
     this.id=id;
     this.model=model;
+
     if (check){
       controlName.text=model["name"];
       controlDescription.text=model["description"];
@@ -91,28 +92,16 @@ class FormScreen extends StatelessWidget {
           if (sendDataToFirestore) {
             if (formKey.currentState!.validate()) {
               if(check){
-                FirebaseFirestore.instance.collection('data')
-                    .doc(id)
-                    .update({
-                  'name': controlName.text,
-                  'description': controlDescription.text,
-                  "email":controlEmail.text,
-                  "image": controlImage.text,})
-                    .then((value) => print("User Updated"))
-                    .catchError((error) => print("Failed to update user: $error"));
+                FirestoreOperation().updateFirestore(name: controlName.text, description: controlDescription.text, email: controlEmail.text, image: controlImage.text, id: id);
+
                 Navigator.pop(context);
               }
               else{
-                FirebaseFirestore.instance.collection('data').add({
-                  "name": controlName.text,
-                  "description": controlDescription.text,
-                  "email": controlEmail.text,
-                  "image": controlImage.text,
-                });
+                FirestoreOperation().setDataInFirestore(name: controlName.text, description: controlDescription.text, email: controlEmail.text, image: controlImage.text);
+
                 Navigator.pop(context);
               }
             }
-
           } else if (text == "Cancel") Navigator.pop(context);
 
         },

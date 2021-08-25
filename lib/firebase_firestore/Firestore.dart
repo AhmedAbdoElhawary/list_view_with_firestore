@@ -4,21 +4,24 @@ class FirestoreOperation {
   var fire = FirebaseFirestore.instance.collection('data');
 
   setDataInFirestore({required String name, required String description, required String email, required String image,}) {
-    fire.add({
-      'name': name,
-      'description': description,
-      "email": email,
-      "image": image,
-    });
+    fire
+        .add({
+          'name': name,
+          'description': description,
+          "email": email,
+          "image": image,
+        })
+        .then((value) => print("User Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
   }
 
   updateFirestore({required String name, required String description, required String email, required String image, required String id}) {
     fire.doc(id)
         .update({
           'name': name,
-          'description': name,
-          "email": name,
-          "image": name,
+          'description': description,
+          "email": email,
+          "image": image,
         })
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));
