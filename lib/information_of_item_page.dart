@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:firestore_again/form_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -33,18 +32,44 @@ class InformationPage extends StatelessWidget {
                   ),
                 ),
               ),
-              TextMethod(text: model["name"], fontSize:50, fontWeight:FontWeight.bold),
-
-              TextMethod(text: model["description"], fontSize:20, fontWeight:FontWeight.normal),
-
-              TextMethod(text: model["email"], fontSize:15, fontWeight:FontWeight.normal),
+              TextMethod(
+                  text: model["name"],
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold),
+              TextMethod(
+                  text: model["description"],
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal),
+              TextMethod(
+                  text: model["email"],
+                  fontSize: 15,
+                  fontWeight: FontWeight.normal),
             ],
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Icon(
+            Icons.edit_outlined,
+            color: Colors.black87,size: 25,
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FormScreen()),
+            );
+          },
+          elevation: 20,
+          backgroundColor: Colors.white,
+
         ),
       ),
     );
   }
-  Widget TextMethod({required String text,required double fontSize,required FontWeight fontWeight}){
+
+  Widget TextMethod(
+      {required String text,
+      required double fontSize,
+      required FontWeight fontWeight}) {
     return Text(
       text,
       style: TextStyle(
