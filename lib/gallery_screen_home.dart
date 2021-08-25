@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firestore_again/information_of_item_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -13,12 +14,11 @@ class galleryScreenHome extends StatelessWidget {
             return CircularProgressIndicator();
           }
           final docs = snapshot.data!.docs;
-          // LogicShowCubit.get(context).model=docs;
           return GridView.builder(
             padding: EdgeInsets.all(15),
             physics: BouncingScrollPhysics(),
             itemBuilder: (BuildContext context, int index) =>
-                buildTwoContainerGridView(docs[index],context),
+                buildTwoContainerGridView(docs[index],context,docs[index].id),
             itemCount: docs.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               mainAxisSpacing: 20,
@@ -31,7 +31,7 @@ class galleryScreenHome extends StatelessWidget {
         });
   }
 
-  Widget buildTwoContainerGridView(var model,var context) {
+  Widget buildTwoContainerGridView(var model,var context,String id) {
     return InkWell(
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -68,10 +68,10 @@ class galleryScreenHome extends StatelessWidget {
         ),
       ),
       onTap: () {
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => InformationPage(model,id)),
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => InformationPage(model: model,id: id,)),
+        );
       },
     );
   }

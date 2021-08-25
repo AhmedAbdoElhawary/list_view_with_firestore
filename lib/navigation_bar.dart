@@ -82,72 +82,28 @@ class _NavigationBarState extends State<NavigationBar> {
     return Drawer(
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Icon(Icons.account_balance),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "test",
-                  style: TextStyle(
-                    fontSize: 25,
-                  ),
-                ),
-              ],
-            ),
+          paddingAppDrawer(),
+          paddingAppDrawer(),
+          paddingAppDrawer(),
+          paddingAppDrawer(),
+        ],
+      ),
+    );
+  }
+
+  Padding paddingAppDrawer(){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Icon(Icons.account_balance),
+          SizedBox(
+            width: 15,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Icon(Icons.account_balance),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "test",
-                  style: TextStyle(
-                    fontSize: 25,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Icon(Icons.account_balance),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "test",
-                  style: TextStyle(
-                    fontSize: 25,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Icon(Icons.account_balance),
-                SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "test",
-                  style: TextStyle(
-                    fontSize: 25,
-                  ),
-                ),
-              ],
+          Text(
+            "test",
+            style: TextStyle(
+              fontSize: 25,
             ),
           ),
         ],
