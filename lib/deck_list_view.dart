@@ -46,14 +46,14 @@ class deckListView extends StatelessWidget {
           child: Row(
             children: [
               Image.network(
-                "${model["image"]}",
+                model["image"],
                 width: 130,
                 height: 110,
                 fit: BoxFit.fill,
               ),
               SizedBox(width: 6),
               Container(
-                width: 240,
+                width: 200,
                 padding: EdgeInsets.only(top: 15),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
