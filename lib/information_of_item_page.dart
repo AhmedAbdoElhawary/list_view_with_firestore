@@ -1,10 +1,10 @@
 import 'package:firestore_again/form_screen.dart';
 import 'package:flutter/material.dart';
 
-class InformationPage extends StatelessWidget {
+class InformationOfItemPage extends StatelessWidget {
   var model;
   String id;
-  InformationPage({required this.model,required this.id});
+  InformationOfItemPage({required this.model,required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class InformationPage extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>new FormScreen(check: true,model:model,id: id,)),
+            MaterialPageRoute(builder: (context) =>new FormScreen(checkForWhichPath: true,model:model,id: id,)),
           );
         },
         elevation: 20,

@@ -61,7 +61,7 @@ class CardGridView extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InformationPage(model:docData,id: id,)),
+          MaterialPageRoute(builder: (context) => InformationOfItemPage(model:docData,id: id,)),
         );
       },
     );
@@ -89,7 +89,7 @@ class CardGridView extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>new FormScreen(check: true,model:docData,id: id,)),
+              MaterialPageRoute(builder: (context) =>new FormScreen(checkForWhichPath: true,model:docData,id: id,)),
 
             );
           },

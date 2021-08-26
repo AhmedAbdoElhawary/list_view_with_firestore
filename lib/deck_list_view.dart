@@ -74,7 +74,7 @@ class deckListView extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,MaterialPageRoute(builder: (context) =>
-                                new FormScreen(model: model, id: id, check: true))
+                                new FormScreen(model: model, id: id, checkForWhichPath: true))
                             );
                           },
                           icon: Icon(Icons.edit_outlined),
@@ -90,7 +90,7 @@ class deckListView extends StatelessWidget {
       ),
       onTap: () {
         Navigator.push(context,MaterialPageRoute(builder: (context) =>
-            InformationPage(model: model, id: id)),
+            InformationOfItemPage(model: model, id: id)),
         );
       },
     );

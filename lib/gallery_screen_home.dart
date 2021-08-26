@@ -70,7 +70,7 @@ class galleryScreenHome extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InformationPage(model: model,id: id,)),
+          MaterialPageRoute(builder: (context) => InformationOfItemPage(model: model,id: id,)),
         );
       },
     );
