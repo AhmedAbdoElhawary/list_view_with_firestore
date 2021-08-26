@@ -37,6 +37,8 @@ dependencies:
   firebase_auth: ^3.0.2
   bloc: ^7.1.0
   flutter_bloc: ^7.2.0
+  cupertino_icons: ^0.1.2
+  image_picker: ^0.8.3+3
 
 dev_dependencies:
   flutter_test:

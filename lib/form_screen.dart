@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firestore_again/firebase_firestore/Firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class FormScreen extends StatelessWidget {
   var controlName = TextEditingController();
@@ -7,6 +12,7 @@ class FormScreen extends StatelessWidget {
   var controlEmail = TextEditingController();
   var controlImage = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  var firestoreImage;
   var model;
   var id;
   bool check;
@@ -36,14 +42,13 @@ class FormScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(15.0),
                   child: SingleChildScrollView(
                     child: Column(children: [
-                      TextFromFieldMethod(nameOfController: controlName, typeOfText: TextInputType.text, labelText: "the Name"),
+                      TextFromFieldMethod(nameOfController: controlName, typeOfText: TextInputType.text, labelText: "the Name",checkGallery:false),
                       SizedBoxMethod(),
-                      TextFromFieldMethod(nameOfController: controlDescription, typeOfText: TextInputType.text, labelText: "Description"),
+                      TextFromFieldMethod(nameOfController: controlDescription, typeOfText: TextInputType.text, labelText: "Description",checkGallery:false),
                       SizedBoxMethod(),
-                      TextFromFieldMethod(nameOfController: controlEmail, typeOfText: TextInputType.emailAddress, labelText: "Email"),
+                      TextFromFieldMethod(nameOfController: controlEmail, typeOfText: TextInputType.emailAddress, labelText: "Email",checkGallery:false),
                       SizedBoxMethod(),
-                      TextFromFieldMethod(nameOfController: controlImage, typeOfText: TextInputType.url, labelText: "Image"
-                      ),
+                      TextFromFieldMethod(nameOfController: controlImage, typeOfText: TextInputType.url, labelText: "Image",checkGallery:true),
                     ]),
                   ),
                 ),
@@ -66,7 +71,8 @@ class FormScreen extends StatelessWidget {
     );
   }
 
-  Widget TextFromFieldMethod ({required TextEditingController nameOfController, required var typeOfText, required String labelText}) {
+  Widget TextFromFieldMethod ({required TextEditingController nameOfController, required var typeOfText, required String labelText,required bool checkGallery}) {
+
     return TextFormField(
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -74,12 +80,28 @@ class FormScreen extends StatelessWidget {
         }
         return null;
       },
+
+      onTap: () async {
+        if(checkGallery){
+          late File image;
+          var urlImage;
+          final picker = ImagePicker();
+          final pickedFile = await picker.pickImage(source:ImageSource.gallery);
+
+          if(pickedFile!=null)
+            image=File(pickedFile.path);
+          urlImage=Uri.file(image.path).pathSegments.last;
+          firestoreImage=FirestoreOperation().Firestore(urlImage,pickedFile!.path);
+        }
+      },
+
       controller: nameOfController,
       keyboardType: typeOfText,
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: labelText,
       ),
+
     );
   }
 
@@ -92,12 +114,12 @@ class FormScreen extends StatelessWidget {
           if (sendDataToFirestore) {
             if (formKey.currentState!.validate()) {
               if(check){
-                FirestoreOperation().updateFirestore(name: controlName.text, description: controlDescription.text, email: controlEmail.text, image: controlImage.text, id: id);
+                FirestoreOperation().updateFirestore(name: controlName.text, description: controlDescription.text, email: controlEmail.text, image: firestoreImage, id: id);
 
                 Navigator.pop(context);
               }
               else{
-                FirestoreOperation().setDataInFirestore(name: controlName.text, description: controlDescription.text, email: controlEmail.text, image: controlImage.text);
+                FirestoreOperation().setDataInFirestore(name: controlName.text, description: controlDescription.text, email: controlEmail.text, image: firestoreImage);
 
                 Navigator.pop(context);
               }
