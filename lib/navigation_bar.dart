@@ -45,7 +45,7 @@ class _NavigationBarState extends State<NavigationBar> {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>new FormScreen(checkForWhichPath: false,id: "")),
+          MaterialPageRoute(builder: (context) =>new FormScreen(whichPageCome: false,id: "")),
         );
       },
       child: Icon(

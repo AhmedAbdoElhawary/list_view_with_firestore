@@ -13,13 +13,13 @@ class FormScreen extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   var model;
   var id;
-  bool checkForWhichPath;
+  bool whichPageCome;
   //true => it is come from InformationOfItemPage class and the FormScreen should be have the data of this item
   //false=> it is come from NavigationBar class and the FormScreen should be empty
-  FormScreen({var model, var id, required this.checkForWhichPath}) {
+  FormScreen({var model, var id, required this.whichPageCome}) {
     this.id = id;
     this.model = model;
-    if (checkForWhichPath) {
+    if (whichPageCome) {
       controlName.text = model["name"];
       controlDescription.text = model["description"];
       controlEmail.text = model["email"];
@@ -40,25 +40,26 @@ class FormScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(15.0),
                   child: SingleChildScrollView(
                     child: Column(children: [
-                      TextFromFieldMethod(nameOfController: controlName, typeOfText: TextInputType.text, labelText: "the Name", checkGallery: false),
-                      SizedBoxMethod(),
-                      TextFromFieldMethod(nameOfController: controlDescription, typeOfText: TextInputType.text, labelText: "Description", checkGallery: false),
-                      SizedBoxMethod(),
-                      TextFromFieldMethod(nameOfController: controlEmail, typeOfText: TextInputType.emailAddress, labelText: "Email", checkGallery: false),
-                      SizedBoxMethod(),
-                      ContainerMethod(),
+                      buildTextFromField(nameOfController: controlName, typeOfText: TextInputType.text, labelText: "the Name"),
+                      buildSizedBox(),
+                      buildTextFromField(nameOfController: controlDescription, typeOfText: TextInputType.text, labelText: "Description"),
+                      buildSizedBox(),
+                      buildTextFromField(nameOfController: controlEmail, typeOfText: TextInputType.emailAddress, labelText: "Email"),
+                      buildSizedBox(),
+                      buildContainerOfImage(),
                     ]),
                   ),
                 ),
               ),
             ),
+            SizedBox(height: 15),
             Container(
               color: Colors.white60,
               width: double.infinity,
               child: Row(
                 children: [
-                  TextButtonMethod(sendDataToFirestore: false, context: context, text: "Cancel"),
-                  TextButtonMethod(sendDataToFirestore: true, context: context, text: "Save "),
+                  buildTextButton(sendDataToFirestore: false, context: context, text: "Cancel"),
+                  buildTextButton(sendDataToFirestore: true, context: context, text: "Save "),
                 ],
               ),
             ),
@@ -68,35 +69,35 @@ class FormScreen extends StatelessWidget {
     );
   }
 
-  String storageUrlImage = "";
-  bool checkReadyImageToUpload = false;
-  bool checkForSelectImage = false;
-  Firestore(var lastImagePath, var completeImagePath) async {
+  String urlImageFirebaseStorage = "";
+  bool ReadyUrlImageFirebaseStorage = false;
+  bool isImageSelected = false;
+  addDataToFirebaseStorage(var lastImagePath, var completeImagePath) async {
     File file = File(completeImagePath);
-    checkForSelectImage = true;
+    isImageSelected = true;
     FirebaseStorage.instance
         .ref('data/$lastImagePath')
         .putFile(file)
         .then((v) => {
               v.ref.getDownloadURL().then((value) => {
-                        storageUrlImage = value,
-                        checkReadyImageToUpload = true,
-                        print(value),
+                        urlImageFirebaseStorage = value,
+                        ReadyUrlImageFirebaseStorage = true,
+
                       })
                   .catchError((e) {})
             })
         .catchError((e) {});
   }
 
-  InkWell ContainerMethod() {
+  InkWell buildContainerOfImage() {
     return InkWell(
       onTap: () async {
-        late File image;
+        late File imageFullPath;
         final picker = ImagePicker();
         final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-        if (pickedFile != null) image = File(pickedFile.path);
-        var urlImage = Uri.file(image.path).pathSegments.last;
-        Firestore(urlImage, image.path);
+        if (pickedFile != null) imageFullPath = File(pickedFile.path);
+        var urlImageLastPath = Uri.file(imageFullPath.path).pathSegments.last;
+        addDataToFirebaseStorage(urlImageLastPath, imageFullPath.path);
       },
       child: Container(
         child: Icon(Icons.camera_alt),
@@ -113,7 +114,7 @@ class FormScreen extends StatelessWidget {
     );
   }
 
-  Widget TextFromFieldMethod({required TextEditingController nameOfController, required var typeOfText, required String labelText, required bool checkGallery}) {
+  Widget buildTextFromField({required TextEditingController nameOfController, required var typeOfText, required String labelText}) {
     return TextFormField(
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -130,18 +131,18 @@ class FormScreen extends StatelessWidget {
     );
   }
 
-  Widget SizedBoxMethod() => SizedBox(height: 15);
+  Widget buildSizedBox() => SizedBox(height: 15);
 
-  Widget TextButtonMethod({required bool sendDataToFirestore, required var context, required String text}) {
+  Widget buildTextButton({required bool sendDataToFirestore, required var context, required String text}) {
     return Expanded(
       child: TextButton(
         onPressed: () {
           if (sendDataToFirestore) {
             if (formKey.currentState!.validate()) {
-              if (checkForWhichPath) {
+              if (whichPageCome) {
                 String updateImage = model["image"];
-                if (checkForSelectImage) updateImage = storageUrlImage;
-                if (checkReadyImageToUpload) {
+                if (isImageSelected) updateImage = urlImageFirebaseStorage;
+                if (ReadyUrlImageFirebaseStorage) {
                   FirestoreOperation().updateFirestore(
                       name: controlName.text,
                       description: controlDescription.text,
@@ -150,15 +151,15 @@ class FormScreen extends StatelessWidget {
                       id: id);
                   Navigator.pop(context);
                 } else
-                  showToastMethod();
-              } else if (checkReadyImageToUpload) {
-                FirestoreOperation().setDataInFirestore(
+                  buildShowToast();
+              } else if (ReadyUrlImageFirebaseStorage) {
+                FirestoreOperation().addDataFirestore(
                     name: controlName.text,
                     description: controlDescription.text,
                     email: controlEmail.text,
-                    image: storageUrlImage.toString());
+                    image: urlImageFirebaseStorage.toString());
                 Navigator.pop(context);
-              } else if (!checkReadyImageToUpload) showToastMethod();
+              } else if (!ReadyUrlImageFirebaseStorage) buildShowToast();
             }
           } else if (text == "Cancel") Navigator.pop(context);
         },
@@ -167,7 +168,7 @@ class FormScreen extends StatelessWidget {
     );
   }
 
-  Future<bool?> showToastMethod() {
+  Future<bool?> buildShowToast() {
     return Fluttertoast.showToast(
         msg: "uploading...",
         toastLength: Toast.LENGTH_SHORT,

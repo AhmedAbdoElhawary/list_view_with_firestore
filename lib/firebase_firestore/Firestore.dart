@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 class FirestoreOperation {
-  var fire = FirebaseFirestore.instance.collection('data');
+  var dbref = FirebaseFirestore.instance.collection('data');
 
-  setDataInFirestore({required String name, required String description, required String email, required var image,}) {
-    fire
+  addDataFirestore({required String name, required String description, required String email, required var image,}) {
+    dbref
         .add({
           'name': name,
           'description': description,
@@ -15,7 +15,7 @@ class FirestoreOperation {
   }
 
   updateFirestore({required String name, required String description, required String email, required String image, required String id}) {
-    fire.doc(id)
+    dbref.doc(id)
         .update({
           'name': name,
           'description': description,
@@ -26,8 +26,8 @@ class FirestoreOperation {
         .catchError((error) => print("Failed to update user: $error"));
   }
 
-  deleteDataFromFirestore({required String id}) {
-    fire
+  deleteDataFirestore({required String id}) {
+    dbref
         .doc(id)
         .delete()
         .then((value) => print("deleting successfully"))
