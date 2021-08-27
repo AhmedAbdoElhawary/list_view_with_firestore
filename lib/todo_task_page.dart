@@ -2,8 +2,8 @@ import 'package:firestore_again/form_screen.dart';
 import 'package:flutter/material.dart';
 
 class TodoTaskPage extends StatelessWidget {
-  var model;
-  String id;
+  final model;
+  final String id;
   TodoTaskPage({required this.model, required this.id});
 
   @override
@@ -69,9 +69,9 @@ class TodoTaskPage extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => new FormScreen(
-                    whichPageCome: true,
-                    model: model,
-                    id: id,
+                    isUpdatingTask: true,
+                    taskData: model,
+                    taskDocId: id,
                   )),
         );
       },

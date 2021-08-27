@@ -96,9 +96,9 @@ class CardGridView extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => new FormScreen(
-                        whichPageCome: true,
-                        model: docData,
-                        id: id,
+                        isUpdatingTask: true,
+                        taskData: docData,
+                        taskDocId: id,
                       )),
             );
           },
