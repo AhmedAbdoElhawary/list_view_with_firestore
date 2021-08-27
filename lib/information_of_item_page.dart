@@ -1,10 +1,10 @@
 import 'package:firestore_again/form_screen.dart';
 import 'package:flutter/material.dart';
 
-class InformationOfItemPage extends StatelessWidget {
+class TodoTaskPage extends StatelessWidget {
   var model;
   String id;
-  InformationOfItemPage({required this.model, required this.id});
+  TodoTaskPage({required this.model, required this.id});
 
   @override
   Widget build(BuildContext context) {

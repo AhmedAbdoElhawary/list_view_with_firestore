@@ -32,7 +32,8 @@ class deckListView extends StatelessWidget {
     );
   }
 
-  Widget buildPaddingListView({required model, var context, required String id}) {
+  Widget buildPaddingListView(
+      {required model, var context, required String id}) {
     return InkWell(
       child: Card(
         shadowColor: Colors.blue[300],
@@ -66,16 +67,20 @@ class deckListView extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () async {
-                            FirestoreOperation().deleteDataFirestore(id: id,model:model,fromUpdate: false);
+                            FirestoreOperation().deleteDataFirestore(
+                                id: id, model: model, fromUpdate: false);
                           },
                           icon: Icon(Icons.delete_outline),
                         ),
                         IconButton(
                           onPressed: () {
                             Navigator.push(
-                              context,MaterialPageRoute(builder: (context) =>
-                                new FormScreen(model: model, id: id, whichPageCome: true))
-                            );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => new FormScreen(
+                                        model: model,
+                                        id: id,
+                                        whichPageCome: true)));
                           },
                           icon: Icon(Icons.edit_outlined),
                         ),
@@ -89,8 +94,10 @@ class deckListView extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Navigator.push(context,MaterialPageRoute(builder: (context) =>
-            InformationOfItemPage(model: model, id: id)),
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => TodoTaskPage(model: model, id: id)),
         );
       },
     );
