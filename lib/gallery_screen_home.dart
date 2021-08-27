@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firestore_again/information_of_item_page.dart';
+import 'package:firestore_again/todo_task_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -18,7 +18,7 @@ class galleryScreenHome extends StatelessWidget {
             padding: EdgeInsets.all(15),
             physics: BouncingScrollPhysics(),
             itemBuilder: (BuildContext context, int index) =>
-                buildTwoContainerGridView(docs[index],context,docs[index].id),
+                buildTwoContainerGridView(docs[index], context, docs[index].id),
             itemCount: docs.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               mainAxisSpacing: 20,
@@ -31,7 +31,7 @@ class galleryScreenHome extends StatelessWidget {
         });
   }
 
-  Widget buildTwoContainerGridView(var model,var context,String id) {
+  Widget buildTwoContainerGridView(var model, var context, String id) {
     return InkWell(
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -70,7 +70,11 @@ class galleryScreenHome extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InformationOfItemPage(model: model,id: id,)),
+          MaterialPageRoute(
+              builder: (context) => TodoTaskPage(
+                    model: model,
+                    id: id,
+                  )),
         );
       },
     );
