@@ -142,12 +142,12 @@ class FormScreen extends StatelessWidget {
               if (whichPageCome) {
                 if (isImageSelected) {
                   if (ReadyUrlImageFirebaseStorage) {
-                    buildUpdateFirestore(urlImageFirebaseStorage);
+                    buildUpdateDataFirestore(urlImageFirebaseStorage);
                     Navigator.pop(context);
                   } else
                     buildShowToast();
                 }else {
-                  buildUpdateFirestore(model["image"]);
+                  buildUpdateDataFirestore(model["image"]);
                   Navigator.pop(context);
                 }
 
@@ -167,8 +167,8 @@ class FormScreen extends StatelessWidget {
     );
   }
 
-  buildUpdateFirestore(String updateImage) {
-    FirestoreOperation().updateFirestore(
+  buildUpdateDataFirestore(String updateImage) {
+    FirestoreOperation().updateDataFirestore(
                     name: controlName.text,
                     description: controlDescription.text,
                     email: controlEmail.text,

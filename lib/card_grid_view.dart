@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'common_ui/grid_sliver_delegates.dart';
 
-var dbRef = FirebaseFirestore.instance.collection("data").snapshots();
+var dbrefSnap = FirebaseFirestore.instance.collection("data").snapshots();
 
 typedef dbDoc = QueryDocumentSnapshot<Map<String, dynamic>>;
 typedef dbDocData = Map<String, dynamic>;
@@ -15,7 +15,7 @@ class CardGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: dbRef,
+        stream: dbrefSnap,
         builder: (BuildContext context,AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             return CircularProgressIndicator();
@@ -97,7 +97,7 @@ class CardGridView extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.delete_outline),
           onPressed: () {
-            FirestoreOperation().deleteDataFirestore(id: id);
+            FirestoreOperation().deleteDataFirestore(id: id,model: docData);
           },
         ),
         CardViewDivider(45)

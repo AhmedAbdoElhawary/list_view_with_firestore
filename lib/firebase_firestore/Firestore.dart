@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 class FirestoreOperation {
   var dbref = FirebaseFirestore.instance.collection('data');
 
@@ -14,7 +15,7 @@ class FirestoreOperation {
         .catchError((error) => print("Failed to update user: $error"));
   }
 
-  updateFirestore({required String name, required String description, required String email, required String image, required String id}) {
+  updateDataFirestore({required String name, required String description, required String email, required String image, required String id}) {
     dbref.doc(id)
         .update({
           'name': name,
@@ -26,12 +27,23 @@ class FirestoreOperation {
         .catchError((error) => print("Failed to update user: $error"));
   }
 
-  deleteDataFirestore({required String id}) {
+  deleteDataFirestore({required String id,required var model}) async {
+    String filePath = model["image"]
+        .replaceAll(new RegExp(r'(\?alt).*'), '');
+
+    List split=filePath.split("data%2F");
+
+    FirebaseStorage.instance.ref("data").child(split[1]).delete()
+        .then((_) => print('Successfully deleted $filePath storage item' ))
+        .catchError((_){print("image not exist in the firebase storage");});
+
     dbref
         .doc(id)
         .delete()
         .then((value) => print("deleting successfully"))
         .catchError((e) => print("$e \nerror while deleting the element"));
+    print(id);
+
   }
 
   }
