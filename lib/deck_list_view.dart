@@ -66,7 +66,7 @@ class deckListView extends StatelessWidget {
                       children: [
                         IconButton(
                           onPressed: () async {
-                            FirestoreOperation().deleteDataFirestore(id: id,model:model);
+                            FirestoreOperation().deleteDataFirestore(id: id,model:model,fromUpdate: false);
                           },
                           icon: Icon(Icons.delete_outline),
                         ),

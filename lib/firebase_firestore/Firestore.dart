@@ -27,9 +27,9 @@ class FirestoreOperation {
         .catchError((error) => print("Failed to update user: $error"));
   }
 
-  deleteDataFirestore({required String id,required var model}) async {
-    String filePath = model["image"]
-        .replaceAll(new RegExp(r'(\?alt).*'), '');
+  deleteDataFirestore({required String id,required var model,required bool fromUpdate}) async {
+
+    String filePath = model["image"].replaceAll(new RegExp(r'(\?alt).*'), '');
 
     List split=filePath.split("data%2F");
 
@@ -37,13 +37,14 @@ class FirestoreOperation {
         .then((_) => print('Successfully deleted $filePath storage item' ))
         .catchError((_){print("image not exist in the firebase storage");});
 
-    dbref
-        .doc(id)
-        .delete()
-        .then((value) => print("deleting successfully"))
-        .catchError((e) => print("$e \nerror while deleting the element"));
-    print(id);
-
+    if(!fromUpdate){
+      dbref
+          .doc(id)
+          .delete()
+          .then((value) => print("deleting successfully"))
+          .catchError((e) => print("$e \nerror while deleting the element"));
+      print(id);
+    }
   }
 
   }

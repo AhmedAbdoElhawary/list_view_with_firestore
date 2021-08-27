@@ -97,7 +97,7 @@ class CardGridView extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.delete_outline),
           onPressed: () {
-            FirestoreOperation().deleteDataFirestore(id: id,model: docData);
+            FirestoreOperation().deleteDataFirestore(id: id,model: docData,fromUpdate: false);
           },
         ),
         CardViewDivider(45)

@@ -174,6 +174,9 @@ class FormScreen extends StatelessWidget {
                     email: controlEmail.text,
                     image: updateImage,
                     id: id);
+    if(updateImage!=model["image"]){
+      FirestoreOperation().deleteDataFirestore(id: id,model:model,fromUpdate: true);
+    }
   }
 
   Future<bool?> buildShowToast() {
