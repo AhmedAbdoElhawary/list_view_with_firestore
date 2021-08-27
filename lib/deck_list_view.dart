@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class deckListView extends StatelessWidget {
-  var fire = FirebaseFirestore.instance.collection("data");
+  var dbRef = FirebaseFirestore.instance.collection("data").snapshots();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: fire.snapshots(),
+      stream: dbRef,
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -58,15 +58,15 @@ class deckListView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TextMethod(model["name"]),
+                    BuildText(model["name"]),
                     SizedBox(height: 10),
-                    TextMethod(model["description"]),
+                    BuildText(model["description"]),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
                           onPressed: () async {
-                            FirestoreOperation().deleteDataFromFirestore(id: id);
+                            FirestoreOperation().deleteDataFirestore(id: id,model:model,fromUpdate: false);
                           },
                           icon: Icon(Icons.delete_outline),
                         ),
@@ -74,7 +74,7 @@ class deckListView extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,MaterialPageRoute(builder: (context) =>
-                                new FormScreen(model: model, id: id, checkForWhichPath: true))
+                                new FormScreen(model: model, id: id, whichPageCome: true))
                             );
                           },
                           icon: Icon(Icons.edit_outlined),
@@ -96,7 +96,7 @@ class deckListView extends StatelessWidget {
     );
   }
 
-  Text TextMethod(model) {
+  Text BuildText(model) {
     return Text(
       model,
       maxLines: 1,

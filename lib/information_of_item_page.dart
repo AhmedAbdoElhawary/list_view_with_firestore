@@ -11,19 +11,19 @@ class InformationOfItemPage extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBarMethod(),
-        body: ContainerBodyMethod(),
-        floatingActionButton: FloatingActionButtonMethod(context),
+        appBar: buildAppBar(),
+        body: buildContainerBody(),
+        floatingActionButton: buildFloatingActionButton(context),
       ),
     );
 
   }
-  AppBar AppBarMethod() {
+  AppBar buildAppBar() {
     return AppBar(
         backgroundColor: Colors.white, iconTheme: IconThemeData.fallback());
   }
 
-  Container ContainerBodyMethod() {
+  Container buildContainerBody() {
     return Container(
       child: Column(
         children: [
@@ -43,15 +43,15 @@ class InformationOfItemPage extends StatelessWidget {
               ),
             ),
           ),
-          TextMethod(text: model["name"], fontSize: 50, fontWeight: FontWeight.bold),
-          TextMethod(text: model["description"], fontSize: 20, fontWeight: FontWeight.normal),
-          TextMethod(text: model["email"], fontSize: 15, fontWeight: FontWeight.normal),
+          buildText(text: model["name"], fontSize: 50, fontWeight: FontWeight.bold),
+          buildText(text: model["description"], fontSize: 20, fontWeight: FontWeight.normal),
+          buildText(text: model["email"], fontSize: 15, fontWeight: FontWeight.normal),
         ],
       ),
     );
   }
 
-  FloatingActionButton FloatingActionButtonMethod(BuildContext context) {
+  FloatingActionButton buildFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
         child: Icon(
           Icons.edit_outlined,
@@ -60,7 +60,7 @@ class InformationOfItemPage extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) =>new FormScreen(checkForWhichPath: true,model:model,id: id,)),
+            MaterialPageRoute(builder: (context) =>new FormScreen(whichPageCome: true,model:model,id: id,)),
           );
         },
         elevation: 20,
@@ -68,7 +68,7 @@ class InformationOfItemPage extends StatelessWidget {
       );
   }
 
-  Widget TextMethod({required String text, required double fontSize, required FontWeight fontWeight}) {
+  Widget buildText({required String text, required double fontSize, required FontWeight fontWeight}) {
     return Text(
       text,
       style: TextStyle(
