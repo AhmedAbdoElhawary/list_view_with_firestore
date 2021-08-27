@@ -86,12 +86,11 @@ class TodoTaskPage extends StatelessWidget {
       required FontWeight fontWeight}) {
     return Text(
       text,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        textBaseline: TextBaseline.alphabetic,
-        overflow: TextOverflow.ellipsis,
-      ),
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          textBaseline: TextBaseline.alphabetic),
       maxLines: 2,
     );
   }
