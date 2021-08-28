@@ -6,24 +6,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class FormScreen extends StatelessWidget {
-  var controlName = TextEditingController();
-  var controlDescription = TextEditingController();
-  var controlEmail = TextEditingController();
-  var controlImage = TextEditingController();
+  final controlName = TextEditingController();
+  final controlDescription = TextEditingController();
+  final controlEmail = TextEditingController();
+  final controlImage = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  var model;
-  var id;
-  bool whichPageCome;
-  //true => it is come from InformationOfItemPage class and the FormScreen should be have the data of this item
-  //false=> it is come from NavigationBar class and the FormScreen should be empty
-  FormScreen({var model, var id, required this.whichPageCome}) {
-    this.id = id;
-    this.model = model;
-    if (whichPageCome) {
-      controlName.text = model["name"];
-      controlDescription.text = model["description"];
-      controlEmail.text = model["email"];
-      controlImage.text = model["image"];
+  final taskData;
+  final taskDocId;
+  final bool isUpdatingTask;
+
+  FormScreen({this.taskData, this.taskDocId, required this.isUpdatingTask}) {
+    if (isUpdatingTask) {
+      controlName.text = taskData["name"];
+      controlDescription.text = taskData["description"];
+      controlEmail.text = taskData["email"];
+      controlImage.text = taskData["image"];
     }
   }
   @override
@@ -94,14 +91,14 @@ class FormScreen extends StatelessWidget {
         .ref('data/$lastImagePath')
         .putFile(file)
         .then((v) => {
-              v.ref
-                  .getDownloadURL()
-                  .then((value) => {
-                        urlImageFirebaseStorage = value,
-                        ReadyUrlImageFirebaseStorage = true,
-                      })
-                  .catchError((e) {})
-            })
+      v.ref
+          .getDownloadURL()
+          .then((value) => {
+        urlImageFirebaseStorage = value,
+        ReadyUrlImageFirebaseStorage = true,
+      })
+          .catchError((e) {})
+    })
         .catchError((e) {});
   }
 
@@ -132,8 +129,8 @@ class FormScreen extends StatelessWidget {
 
   Widget buildTextFromField(
       {required TextEditingController nameOfController,
-      required var typeOfText,
-      required String labelText}) {
+        required var typeOfText,
+        required String labelText}) {
     return TextFormField(
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -154,14 +151,14 @@ class FormScreen extends StatelessWidget {
 
   Widget buildTextButton(
       {required bool sendDataToFirestore,
-      required var context,
-      required String text}) {
+        required var context,
+        required String text}) {
     return Expanded(
       child: TextButton(
         onPressed: () {
           if (sendDataToFirestore) {
             if (formKey.currentState!.validate()) {
-              if (whichPageCome) {
+              if (isUpdatingTask) {
                 if (isImageSelected) {
                   if (ReadyUrlImageFirebaseStorage) {
                     buildUpdateDataFirestore(urlImageFirebaseStorage);
@@ -169,7 +166,7 @@ class FormScreen extends StatelessWidget {
                   } else
                     buildShowToast();
                 } else {
-                  buildUpdateDataFirestore(model["image"]);
+                  buildUpdateDataFirestore(taskData["image"]);
                   Navigator.pop(context);
                 }
               } else if (ReadyUrlImageFirebaseStorage) {
@@ -194,10 +191,10 @@ class FormScreen extends StatelessWidget {
         description: controlDescription.text,
         email: controlEmail.text,
         image: updateImage,
-        id: id);
-    if (updateImage != model["image"]) {
-      FirestoreOperation()
-          .deleteDataFirestore(id: id, model: model, fromUpdate: true);
+        id: taskDocId);
+    if (updateImage != taskData["image"]) {
+      FirestoreOperation().deleteDataFirestore(
+          id: taskDocId, model: taskData, fromUpdate: true);
     }
   }
 
