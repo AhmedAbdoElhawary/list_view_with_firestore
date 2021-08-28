@@ -11,7 +11,7 @@ class FirestoreOperation {
           "email": email,
           "image": image,
         })
-        .then((value) => print("User Updated"))
+        .then((value) => print("User Updat ed"))
         .catchError((error) => print("Failed to update user: $error"));
   }
 

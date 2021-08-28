@@ -40,11 +40,20 @@ class FormScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(15.0),
                   child: SingleChildScrollView(
                     child: Column(children: [
-                      buildTextFromField(nameOfController: controlName, typeOfText: TextInputType.text, labelText: "the Name"),
+                      buildTextFromField(
+                          nameOfController: controlName,
+                          typeOfText: TextInputType.text,
+                          labelText: "the Name"),
                       buildSizedBox(),
-                      buildTextFromField(nameOfController: controlDescription, typeOfText: TextInputType.text, labelText: "Description"),
+                      buildTextFromField(
+                          nameOfController: controlDescription,
+                          typeOfText: TextInputType.text,
+                          labelText: "Description"),
                       buildSizedBox(),
-                      buildTextFromField(nameOfController: controlEmail, typeOfText: TextInputType.emailAddress, labelText: "Email"),
+                      buildTextFromField(
+                          nameOfController: controlEmail,
+                          typeOfText: TextInputType.emailAddress,
+                          labelText: "Email"),
                       buildSizedBox(),
                       buildContainerOfImage(),
                     ]),
@@ -58,8 +67,14 @@ class FormScreen extends StatelessWidget {
               width: double.infinity,
               child: Row(
                 children: [
-                  buildTextButton(sendDataToFirestore: false, context: context, text: "Cancel"),
-                  buildTextButton(sendDataToFirestore: true, context: context, text: "Save "),
+                  buildTextButton(
+                      sendDataToFirestore: false,
+                      context: context,
+                      text: "Cancel"),
+                  buildTextButton(
+                      sendDataToFirestore: true,
+                      context: context,
+                      text: "Save "),
                 ],
               ),
             ),
@@ -79,10 +94,11 @@ class FormScreen extends StatelessWidget {
         .ref('data/$lastImagePath')
         .putFile(file)
         .then((v) => {
-              v.ref.getDownloadURL().then((value) => {
+              v.ref
+                  .getDownloadURL()
+                  .then((value) => {
                         urlImageFirebaseStorage = value,
                         ReadyUrlImageFirebaseStorage = true,
-
                       })
                   .catchError((e) {})
             })
@@ -114,7 +130,10 @@ class FormScreen extends StatelessWidget {
     );
   }
 
-  Widget buildTextFromField({required TextEditingController nameOfController, required var typeOfText, required String labelText}) {
+  Widget buildTextFromField(
+      {required TextEditingController nameOfController,
+      required var typeOfText,
+      required String labelText}) {
     return TextFormField(
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -133,7 +152,10 @@ class FormScreen extends StatelessWidget {
 
   Widget buildSizedBox() => SizedBox(height: 15);
 
-  Widget buildTextButton({required bool sendDataToFirestore, required var context, required String text}) {
+  Widget buildTextButton(
+      {required bool sendDataToFirestore,
+      required var context,
+      required String text}) {
     return Expanded(
       child: TextButton(
         onPressed: () {
@@ -146,11 +168,10 @@ class FormScreen extends StatelessWidget {
                     Navigator.pop(context);
                   } else
                     buildShowToast();
-                }else {
+                } else {
                   buildUpdateDataFirestore(model["image"]);
                   Navigator.pop(context);
                 }
-
               } else if (ReadyUrlImageFirebaseStorage) {
                 FirestoreOperation().addDataFirestore(
                     name: controlName.text,
@@ -169,13 +190,14 @@ class FormScreen extends StatelessWidget {
 
   buildUpdateDataFirestore(String updateImage) {
     FirestoreOperation().updateDataFirestore(
-                    name: controlName.text,
-                    description: controlDescription.text,
-                    email: controlEmail.text,
-                    image: updateImage,
-                    id: id);
-    if(updateImage!=model["image"]){
-      FirestoreOperation().deleteDataFirestore(id: id,model:model,fromUpdate: true);
+        name: controlName.text,
+        description: controlDescription.text,
+        email: controlEmail.text,
+        image: updateImage,
+        id: id);
+    if (updateImage != model["image"]) {
+      FirestoreOperation()
+          .deleteDataFirestore(id: id, model: model, fromUpdate: true);
     }
   }
 

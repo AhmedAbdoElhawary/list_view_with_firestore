@@ -16,7 +16,8 @@ class CardGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder(
         stream: dbrefSnap,
-        builder: (BuildContext context,AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             return CircularProgressIndicator();
           final docs = snapshot.data!.docs;
@@ -31,11 +32,11 @@ class CardGridView extends StatelessWidget {
       gridDelegate: CardGridSliverDelegate(),
       itemCount: docs.length,
       itemBuilder: (BuildContext context, int index) =>
-          CardGridViewItem(docs[index].data(), context,docs[index].id),
+          CardGridViewItem(docs[index].data(), context, docs[index].id),
     );
   }
 
-  Widget CardGridViewItem(dbDocData docData, var context,String id) {
+  Widget CardGridViewItem(dbDocData docData, var context, String id) {
     return InkWell(
       child: Card(
         shadowColor: Colors.blue,
@@ -52,7 +53,7 @@ class CardGridView extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: CardGridViewItemContent(docData,context,id),
+              children: CardGridViewItemContent(docData, context, id),
             ),
           ),
         ),
@@ -60,13 +61,18 @@ class CardGridView extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InformationOfItemPage(model:docData,id: id,)),
+          MaterialPageRoute(
+              builder: (context) => InformationOfItemPage(
+                    model: docData,
+                    id: id,
+                  )),
         );
       },
     );
   }
 
-  List<Widget> CardGridViewItemContent(dbDocData docData,var context,String id) {
+  List<Widget> CardGridViewItemContent(
+      dbDocData docData, var context, String id) {
     return [
       CardViewDivider(40),
       NameText(docData),
@@ -74,11 +80,11 @@ class CardGridView extends StatelessWidget {
       CardViewDivider(25),
       EmailText(docData),
       CardViewDivider(25),
-      CardViewActionItems(docData,context,id),
+      CardViewActionItems(docData, context, id),
     ];
   }
 
-  Row CardViewActionItems(var docData,var context,String id) {
+  Row CardViewActionItems(var docData, var context, String id) {
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -88,8 +94,12 @@ class CardGridView extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>new FormScreen(whichPageCome: true,model:docData,id: id,)),
-
+              MaterialPageRoute(
+                  builder: (context) => new FormScreen(
+                        whichPageCome: true,
+                        model: docData,
+                        id: id,
+                      )),
             );
           },
         ),
@@ -97,7 +107,8 @@ class CardGridView extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.delete_outline),
           onPressed: () {
-            FirestoreOperation().deleteDataFirestore(id: id,model: docData,fromUpdate: false);
+            FirestoreOperation()
+                .deleteDataFirestore(id: id, model: docData, fromUpdate: false);
           },
         ),
         CardViewDivider(45)
@@ -132,5 +143,4 @@ class CardGridView extends StatelessWidget {
   }
 
   SizedBox CardViewDivider(double height) => SizedBox(height: height);
-
 }
