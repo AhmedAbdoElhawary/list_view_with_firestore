@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firestore_again/firebase_firestore/Firestore.dart';
 import 'package:firestore_again/form_screen.dart';
-import 'package:firestore_again/information_of_item_page.dart';
+import 'package:firestore_again/todo_task_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -30,9 +30,9 @@ class deckListView extends StatelessWidget {
               return taskListItem(taskDoc: taskDoc, context: context);
             },
             separatorBuilder: (context, index) => Container(
-              width: double.infinity,
-              height: 5,
-            ));
+                  width: double.infinity,
+                  height: 5,
+                ));
       },
     );
   }
@@ -138,8 +138,8 @@ class deckListView extends StatelessWidget {
 }
 
 Image taskListItemImage(String imageUrl) => Image.network(
-  imageUrl,
-  width: 130,
-  height: 110,
-  fit: BoxFit.fill,
-);
+      imageUrl,
+      width: 130,
+      height: 110,
+      fit: BoxFit.fill,
+    );

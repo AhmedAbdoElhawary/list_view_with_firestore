@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firestore_again/information_of_item_page.dart';
+import 'package:firestore_again/todo_task_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -72,9 +72,9 @@ class galleryScreenHome extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => TodoTaskPage(
-                model: model,
-                id: id,
-              )),
+                    model: model,
+                    id: id,
+                  )),
         );
       },
     );

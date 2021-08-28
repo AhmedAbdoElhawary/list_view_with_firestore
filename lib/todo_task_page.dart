@@ -69,10 +69,10 @@ class TodoTaskPage extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => new FormScreen(
-                isUpdatingTask: true,
-                taskData: model,
-                taskDocId: id,
-              )),
+                    isUpdatingTask: true,
+                    taskData: model,
+                    taskDocId: id,
+                  )),
         );
       },
       elevation: 20,
@@ -82,8 +82,8 @@ class TodoTaskPage extends StatelessWidget {
 
   Widget buildText(
       {required String text,
-        required double fontSize,
-        required FontWeight fontWeight}) {
+      required double fontSize,
+      required FontWeight fontWeight}) {
     return Text(
       text,
       overflow: TextOverflow.ellipsis,

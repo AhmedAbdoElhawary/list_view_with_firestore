@@ -91,14 +91,14 @@ class FormScreen extends StatelessWidget {
         .ref('data/$lastImagePath')
         .putFile(file)
         .then((v) => {
-      v.ref
-          .getDownloadURL()
-          .then((value) => {
-        urlImageFirebaseStorage = value,
-        ReadyUrlImageFirebaseStorage = true,
-      })
-          .catchError((e) {})
-    })
+              v.ref
+                  .getDownloadURL()
+                  .then((value) => {
+                        urlImageFirebaseStorage = value,
+                        ReadyUrlImageFirebaseStorage = true,
+                      })
+                  .catchError((e) {})
+            })
         .catchError((e) {});
   }
 
@@ -129,8 +129,8 @@ class FormScreen extends StatelessWidget {
 
   Widget buildTextFromField(
       {required TextEditingController nameOfController,
-        required var typeOfText,
-        required String labelText}) {
+      required var typeOfText,
+      required String labelText}) {
     return TextFormField(
       validator: (value) {
         if (value == null || value.isEmpty) {
@@ -151,8 +151,8 @@ class FormScreen extends StatelessWidget {
 
   Widget buildTextButton(
       {required bool sendDataToFirestore,
-        required var context,
-        required String text}) {
+      required var context,
+      required String text}) {
     return Expanded(
       child: TextButton(
         onPressed: () {

@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-              new FormScreen(isUpdatingTask: false, taskDocId: "")),
+                  new FormScreen(isUpdatingTask: false, taskDocId: "")),
         );
       },
       child: Icon(
