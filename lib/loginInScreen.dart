@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firestore_again/common_method/commonMethod.dart';
-import 'package:firestore_again/navigation_bar.dart';
+import 'package:firestore_again/home_page.dart';
 import 'package:firestore_again/sginInScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
         .then((value) {
       print("${value.user!.email}\n${value.user!.uid}");
       print(value.user);
-      buildNavigationPush(context, NavigationBar());
+      buildNavigationPush(context, HomePage());
     }).catchError((e) {
       buildShowToast(message: e.toString());
     });

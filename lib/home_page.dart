@@ -12,13 +12,12 @@ List<Widget> list_widget = [
 
 int c_index = 0;
 
-class NavigationBar extends StatefulWidget {
-
+class HomePage extends StatefulWidget {
   @override
-  State<NavigationBar> createState() => _NavigationBarState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _NavigationBarState extends State<NavigationBar> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -36,7 +35,7 @@ class _NavigationBarState extends State<NavigationBar> {
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 2.7,
-      iconTheme:IconThemeData.fallback() ,
+      iconTheme: IconThemeData.fallback(),
     );
   }
 
@@ -45,7 +44,9 @@ class _NavigationBarState extends State<NavigationBar> {
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>new FormScreen(whichPageCome: false,id: "")),
+          MaterialPageRoute(
+              builder: (context) =>
+              new FormScreen(isUpdatingTask: false, taskDocId: "")),
         );
       },
       child: Icon(
@@ -91,7 +92,7 @@ class _NavigationBarState extends State<NavigationBar> {
     );
   }
 
-  Padding paddingAppDrawer(){
+  Padding paddingAppDrawer() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
