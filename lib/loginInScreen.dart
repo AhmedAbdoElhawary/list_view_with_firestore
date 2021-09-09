@@ -112,10 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  TextFormField buildTextField(
-      {required var controller,
-      required var typeOfText,
-      required bool textVisible}) {
+  TextFormField buildTextField({required var controller, required var typeOfText, required bool textVisible}) {
     return TextFormField(
       obscureText: textVisible,
       controller: controller,

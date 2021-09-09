@@ -43,12 +43,14 @@ class deckListView extends StatelessWidget {
         child: Row(
           children: [
             taskListItemImage(taskData['image']),
-            taskListItemInfo([
-              BuildText(taskData["name"]),
-              VerticalDivider(10),
-              BuildText(taskData["description"]),
-              ListItemActionBtns(taskDoc.id, taskData, context),
-            ]),
+            taskListItemInfo(
+                children: ([
+                  BuildText(taskData["name"]),
+                  VerticalDivider(10),
+                  BuildText(taskData["description"]),
+                  ListItemActionBtns(taskDoc.id, taskData, context)
+                ]),
+                context: context),
           ],
         ),
         onTap: () {
@@ -61,9 +63,9 @@ class deckListView extends StatelessWidget {
         });
   }
 
-  Container taskListItemInfo(children) {
+  Container taskListItemInfo({required var children, required var context}) {
     return Container(
-      width: 200,
+      width: MediaQuery.of(context).size.height * 0.40,
       padding: EdgeInsets.only(top: 15, left: 6),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

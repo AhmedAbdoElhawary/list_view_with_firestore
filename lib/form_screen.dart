@@ -149,10 +149,7 @@ class FormScreen extends StatelessWidget {
 
   Widget buildSizedBox() => SizedBox(height: 15);
 
-  Widget buildTextButton(
-      {required bool sendDataToFirestore,
-      required var context,
-      required String text}) {
+  Widget buildTextButton({required bool sendDataToFirestore, required var context, required String text}) {
     return Expanded(
       child: TextButton(
         onPressed: () {
